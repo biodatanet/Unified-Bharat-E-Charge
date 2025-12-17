@@ -362,90 +362,164 @@ The charging session will terminate when the ₹450.00 cost limit is reached, or
 **11.1.2.15. async action: on_update (stop-charging)**
 * **Method:** POST
 * **Use Case:** At ~60 minutes (or upon the EV user request), the session stops (or notifies the EV user to unplug). He receives a digital invoice and session summary in-app. If anything went wrong (e.g., session interrupted, SOC reaches 100%, etc.), the app reconciles to bill only for energy delivered and issues any adjustment or refund automatically.
-* *Refer to the example request and response provided in Annexure 11.1.2.15*
 
 **11.1.2.16. action: rating**
 * **Method:** POST
 * **Use Cases:** Raghav provides rating for the charging session.
-* *Refer to the example request and response provided in Annexure 11.1.2.16*
 
 **11.1.2.17. action: on_rating**
 * **Method:** POST
 * **Use Cases:** Raghav receives an achievement after providing a rating.
-* *Refer to the example request and response provided in Annexure 11.1.2.17*
 
 **11.1.2.18. action: support**
 * **Method:** POST
 * **Use Cases:** Raghav reaches out for support.
-* *Refer to the example request and response provided in Annexure 11.1.2.18*
 
 **11.1.2.19. action: on_support**
 * **Method:** POST
 * **Use Cases:** Raghav receives a response to his support request.
-* *Refer to the example request and response provided in Annexure 11.1.2.19*
 
 ### 11.2. User Story – 2 - Reservation of an EV charging time slot
 This section covers advance reservation of a charging slot where users discover and book a charger before driving to the location.
 
-#### 11.2.0.1. Context
-Aisha is driving her electric vehicle along the highway when she notices that his battery level is getting low. Using an EV Charging application(BAP), Aisha discovers nearby charging stations that are compatible with her vehicle. The application retrieves available slots and charger specifications from the available provider's (BPP). Aisha selects a preferred charger and books a slot through the application via beckn APIs to avoid waiting on arrival.
+#### 11.2.1. Consumer User Journey
+Aisha is driving her electric vehicle along the highway when she notices that her battery level is getting low. Using an EV Charging application (BAP), Aisha discovers nearby charging stations that are compatible with her vehicle. The application retrieves available slots and charger specifications from the available provider's (BPP). Aisha selects a preferred charger and books a slot through the application via Beckn APIs to avoid waiting on arrival.
 
-#### 11.2.0.2. Discovery
-**11.2.0.2.1. Adam discovers nearby charging services**
-Aisha opens her EV Charging BAP (powered by a Beckn-enabled discovery network).
-She filters for:
-* DC Fast chargers within 5 km of her location,
-* Connector Type: CCS2,
-* Amenities: restaurants or cafes,
-* Tariff Model: per kWh.
+**Discovery and Selection:**
+Aisha opens her EV Charging BAP (powered by a Beckn-enabled discovery network). She filters for:
+* **Connector Type:** CCS2
+* **Location:** DC Fast chargers within 5 km
+* **Amenities:** Restaurants or cafes
+* **Tariff Model:** Per kWh
 
 The app queries multiple charging providers and returns options showing:
-* ETA from current location,
-* Real-time availability,
-* Tariff per kWh,
-* Active offers (e.g., lunch-hour discounts).
+* **ETA:** Estimated time from current location
+* **Real-time Availability:** Status of slots
+* **Tariff:** Cost per kWh
+* **Active Offers:** Lunch-hour discounts (e.g., promotional pricing)
 
 She compares them and selects "EcoPower Highway Hub – Mandya Food Court".
 
-#### 11.2.0.3. Order (Reservation)
-Aisha taps Reserve Slot → 12:45–11:15 PM.
-The app displays the session terms:
+**Order and Reservation:**
+Aisha taps "Reserve Slot" for the 12:45 PM – 1:15 PM window.
+* **Session Review:** The app displays the session terms:
+    * **Tariff:** ₹18 / kWh
+    * **Grace Period:** 10 min post-session
+    * **Idle Fee Policy:** ₹2/min after grace
+    * **Cancellation Rules:** Free up to 15 min before
+    * **Payment Options:** Hold, Pre-pay, Post-pay
+* **Payment and Confirmation:** She pays ₹500 via her credit card. Upon confirmation of payment receipt, the provider returns a unique Reservation ID.
 
-| Term | Example |
-| :--- | :--- |
-| **Tariff** | ₹18 / kWh |
-| **Grace period** | 10 min post-session |
-| **Idle fee policy** | ₹2/min after grace |
-| **Cancellation rules** | Free up to 15 min before |
-| **Payment options** | Hold, Pre-pay, Post-pay |
+**Fulfilment and Real-time Monitoring:**
+On arrival at the station, Aisha initiates "Start Charging" on her application.
+* **Authentication:** The backend matches the request to her Reservation ID and instructs her to plug in the charging gun.
+* **Session Start:** Once connected, charging begins.
+* **Live Telemetry:** While she enjoys lunch, the app provides live tracking:
+    * **Energy Dispensed:** kWh delivered
+    * **Elapsed Time:** Duration of the session
+    * **Running Cost:** Current bill amount (₹)
+    * **Completion Estimate:** Time remaining until full/target
 
-She pays for 500 rupees through her credit card. The provider returns a reservation ID on confirmation of the payment being recieved.
-
-#### 11.2.0.4. Fulfilment (Session Start & Tracking)
-On arrival, Aisha iniates start charging on her application.
-The backend matches it to her reservation ID and informs her to insert the charging gun to start charging.
-In-app, she views live telemetry:
-* Energy dispensed (kWh)
-* Elapsed time (min)
-* Running cost (₹)
-* Estimated completion time
-
-She enjoys lunch while the system manages the session.
 If she arrives a few minutes late, the charger holds the slot until the grace period expires.
 
-#### 11.2.0.5. Post-Fulfilment
-Charging auto-stops at her requested amount or when she manually ends the session.
-The system issues a digital invoice, updates her wallet balance, and prompts for quick feedback:
-* Amenity rating (1–5)
-* Overall experience (1–5)
-* Optional text comments.
+**Post-Fulfilment and Reconciliation:**
+Charging auto-stops when the requested amount (₹500) is reached or when she manually ends the session.
+* **Session Stop:** The system terminates the power flow.
+* **Digital Summary:** The system issues a digital invoice and updates her wallet balance.
+* **Feedback:** The app prompts for quick feedback:
+    * Amenity rating (1–5)
+    * Overall experience (1–5)
+    * Optional text comments
 
 Satisfied, Aisha resumes her trip with time to spare.
 
-#### 11.2.1. API Calls and Schema
+#### 11.2.2. API Calls and Schema
+*Note: The API calls and schema for reservation follow a similar flow to walk-in but include specific checks for availability and slot booking.*
 
-**11.2.1.1. action: discover**
-Consumers can search for EV charging stations with specific criteria including location, connector type, time window, finder fee etc.
+**11.2.2.1. action: discover**
 * **Method:** POST
-* **Use Cases:** Adam opens his EV Charging BAP (powered by a Beckn-enabled discovery network). He filters for chargers within 5 km of his location.
+* **Use Cases:** Aisha searches for chargers with specific filters (Location, Connector, Amenities).
 
+**11.2.2.2. action: on_discover**
+* **Method:** POST
+* **Use Cases:** The app receives a list of charging stations matching criteria, including ETA, availability, and active offers.
+
+**11.2.2.3. action: select**
+* **Method:** POST
+* **Use Cases:** Aisha selects "EcoPower Highway Hub" and chooses a time slot (12:45–1:15 PM).
+
+**11.2.2.4. action: on_select**
+* **Method:** POST
+* **Use Cases:** The app returns the specific terms for that slot (Tariff, Grace Period, Cancellation Rules).
+
+**11.2.2.5. action: init**
+* **Method:** POST
+* **Use Cases:** Aisha provides her billing information (Credit Card details) for the ₹500 payment.
+
+**11.2.2.6. action: on_init**
+* **Method:** POST
+* **Use Cases:** The app presents the final payment terms and awaits authorization.
+
+**11.2.2.6.1. action: on_status**
+* **Method:** POST
+* **Use Cases:** Application receives a notification on the completed status of the payment for the reservation.
+
+**11.2.2.7. action: confirm**
+* **Method:** POST
+* **Use Cases:** Aisha confirms the reservation order.
+
+**11.2.2.8. action: on_confirm**
+* **Method:** POST
+* **Use Cases:** The application returns a unique Reservation ID confirming the slot is booked.
+
+**11.2.2.9. action: status**
+* **Method:** GET
+* **Use Cases:** Upon arrival, the application checks the status of the reserved charger.
+
+**11.2.2.10. action: on_status**
+* **Method:** POST
+* **Use Cases:** The application confirms the charger is ready and prompts Aisha to "Start Charging" in the app.
+
+**11.2.2.11. action: update (start charging)**
+* **Method:** POST
+* **Use Cases:** Aisha taps "Start Charging" and the app instructs the backend to energize the gun.
+
+**11.2.2.12. action: on_update (start charging)**
+* **Method:** POST
+* **Use Cases:** Response confirming the session has started successfully.
+
+**11.2.2.13. action: track (charging-session progress)**
+* **Method:** POST
+* **Use Cases:** Aisha requests live telemetry (Energy dispensed, running cost) while at lunch.
+
+**11.2.2.14. action: on_track**
+* **Method:** POST
+* **Use Cases:** The app receives real-time updates on the charging progress.
+
+**11.2.2.15. async action: on_status**
+* **Method:** POST
+* **Use Cases:** Aisha receives a notification if there is any error or interruption during the session.
+
+**11.2.2.16. action: on_update (stop-charging)**
+* **Method:** POST
+* **Use Cases:** The system stops charging automatically when the ₹500 limit is reached (or manually by Aisha).
+
+**11.2.2.17. async action: on_update (stop-charging)**
+* **Method:** POST
+* **Use Case:** The session terminates. Aisha receives the digital invoice and updated wallet balance.
+
+**11.2.2.18. action: rating**
+* **Method:** POST
+* **Use Cases:** Aisha provides a rating for the amenities and experience.
+
+**11.2.2.19. action: on_rating**
+* **Method:** POST
+* **Use Cases:** Aisha receives an acknowledgement for her feedback.
+
+**11.2.2.20. action: support**
+* **Method:** POST
+* **Use Cases:** Aisha reaches out for support if needed.
+
+**11.2.2.21. action: on_support**
+* **Method:** POST
+* **Use Cases:** Aisha receives a response to her support request.
