@@ -1,5 +1,8 @@
 # Unified Bharat e-Charge (UBC) - Technical Specification Document v0.9 <!-- omit from toc -->
 
+<img width="816" height="422" alt="image" src="https://github.com/user-attachments/assets/188b1aca-f22f-4cb8-9d54-67949118c74d" />
+
+
 ## Table of Contents <!-- omit from toc -->
 * [Disclaimer](#1-disclaimer)
 * [Abstract](#2-abstract)
@@ -425,7 +428,7 @@ If she arrives a few minutes late, the charger holds the slot until the grace pe
 **Post-Fulfilment and Reconciliation:**
 Charging auto-stops when the requested amount (₹500) is reached or when she manually ends the session.
 * **Session Stop:** The system terminates the power flow.
-* **Digital Summary:** The system issues a digital invoice and updates her wallet balance.
+* **Digital Summary:** The system issues a digital invoice and reimburces back the amount to her account.
 * **Feedback:** The app prompts for quick feedback:
     * Amenity rating (1–5)
     * Overall experience (1–5)
@@ -434,11 +437,11 @@ Charging auto-stops when the requested amount (₹500) is reached or when she ma
 Satisfied, Aisha resumes her trip with time to spare.
 
 #### 11.2.2. API Calls and Schema
-*Note: The API calls and schema for reservation follow a similar flow to walk-in but include specific checks for availability and slot booking.*
+> **Note:** The API calls and schema for reservation follow a similar flow to walk-in but include specific checks for availability and slot booking.*
 
 **11.2.2.1. action: discover**
 * **Method:** POST
-* **Use Cases:** Aisha searches for chargers with specific filters (Location, Connector, Amenities).
+* **Use Cases:** Aisha searches for chargers with specific filters (Location, Connector type and a time slot).
 
 **11.2.2.2. action: on_discover**
 * **Method:** POST
