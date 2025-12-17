@@ -1,7 +1,7 @@
 # Unified Bharat e-Charge (UBC) - Technical Specification Document v0.9 <!-- omit from toc -->
 
 <div align="center">
-  <img width="816" height="422" alt="image" src="https://github.com/user-attachments/assets/188b1aca-f22f-4cb8-9d54-67949118c74d" />
+  <img width="600" alt="image" src="https://github.com/user-attachments/assets/188b1aca-f22f-4cb8-9d54-67949118c74d" />
 </div>
 
 
