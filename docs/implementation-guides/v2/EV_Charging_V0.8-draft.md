@@ -293,77 +293,70 @@ The charging session will terminate when the ₹450.00 cost limit is reached, or
 **11.1.2.1. action: discover**
 * **Method:** POST
 * **Use Cases:** Raghav scans QR code on charger using his BAP user app.
-* *Refer to the example request and response provided in Annexure 11.1.2.1*
 
 **11.1.2.2. action: on_discover**
 * **Method:** POST
 * **Use Cases:** The app receives the charger's details (connector, power rating, live status, tariff, any active time-bound offer).
-* *Refer to the example request and response provided in Annexure 11.1.2.2*
 
 **11.1.2.3. action: select**
 * **Method:** POST
 * **Use Cases:** Raghav selects a service offering from the options he gets. He chooses a 100 INR top-up.
-* *Refer to the example request and response provided in Annexure 11.1.2.3*
 
 **11.1.2.4. action: on_select**
 * **Method:** POST
 * **Use Cases:** Raghav receives estimated quotations for the selected service.
-* *Refer to the example request and response provided in Annexure 11.1.2.4*
 
 **11.1.2.5. action: init**
 * **Method:** POST
 * **Use Cases:** Raghav provides his billing information.
-* *Refer to the example request and response provided in Annexure 11.1.2.5*
 
 **11.1.2.6. action: on_init**
 * **Method:** POST
-* **Use Cases:** Raghav receives the charging session terms (rate, idle fee window, cancellation rules, payment terms etc). He reviews the terms. He chooses UPI and authorizes payment (or an authorization hold, as supported)
-* *Refer to the example request and response provided in Annexure 11.1.2.6*
+* **Use Cases:** Raghav receives the charging session terms (rate, idle fee window, cancellation rules, payment terms etc). He reviews the terms. He chooses UPI and authorizes payment.
 
 **11.1.2.6.1. action: on_status**
 * **Method:** POST
-* **Use Cases:** Raghav receives a notification on the status of the payment initiated for the charging session.
-* *Refer to the example request and response provided in Annexure 11.1.2.6.1*
+* **Use Cases:** Application then receives a notification on the completed status of the payment for the charging session.
 
 **11.1.2.7. action: confirm**
 * **Method:** POST
 * **Use Cases:** Raghav confirms the order.
-* *Refer to the example request and response provided in Annexure 11.1.2.7*
 
 **11.1.2.8. action: on_confirm**
 * **Method:** POST
-* **Use Cases:** The app returns a booking/transaction ID along with the other charging session details.
-* *Refer to the example request and response provided in Annexure 11.1.2.8*
+* **Use Cases:** The application then returns a booking/transaction ID along with the other charging session details.
+
+**11.1.2.8.1 action: status**
+* **Method:** GET
+* **Use Cases:** Raghav is asked to plug in the charger by the application.
+
+**11.1.2.8.2 action: on_status**
+* **Method:** POST
+* **Use Cases:** The application recieves a notification that the gun is successfully connected to the vehicle.
 
 **11.1.2.9. action: update (start charging)**
 * **Method:** POST
 * **Use Cases:** Raghav plugs in and starts the session from the app.
-* *Refer to the example request and response provided in Annexure 11.1.2.9*
 
 **11.1.2.10. action: on_update (start charging)**
 * **Method:** POST
 * **Use Cases:** Response for the charging session initiation.
-* *Refer to the example request and response provided in Annexure 11.1.2.10*
 
 **11.1.2.11. action: track (charging-session progress)**
 * **Method:** POST
 * **Use Cases:** Raghav requests to track the live status of the charging session. state of charge (how much charging has been done).
-* *Refer to the example request and response provided in Annexure 11.1.2.11*
 
 **11.1.2.12. action: on_track**
 * **Method:** POST
 * **Use Cases:** Raghav receives the state of charge (how much charging has been done) of the vehicle.
-* *Refer to the example request and response provided in Annexure 11.1.2.12*
 
 **11.1.2.13. async action: on_status**
 * **Method:** POST
 * **Use Cases:** Raghav receives a notification if there is any error during the charging session.
-* *Refer to the example request and response provided in Annexure 11.1.2.13*
 
 **11.1.2.14. action: on_update (stop-charging)**
 * **Method:** POST
 * **Use Cases:** Raghav initiates a stop charging request when his requirement is met. Note: In practice it is not necessary that an EV user initiates a charging session stop. Based on actual scenario, a charging session can be stopped by the CPO as well.
-* *Refer to the example request and response provided in Annexure 11.1.2.14*
 
 **11.1.2.15. async action: on_update (stop-charging)**
 * **Method:** POST
@@ -394,12 +387,12 @@ The charging session will terminate when the ₹450.00 cost limit is reached, or
 This section covers advance reservation of a charging slot where users discover and book a charger before driving to the location.
 
 #### 11.2.0.1. Context
-Adam is driving his electric vehicle along the highway when he notices that his battery level is getting low. Using an EV Charging BAP, Adam discovers nearby charging stations that are compatible with his vehicle. The BAP retrieves available slots and charger specifications from the available provider's BPPs. Adam selects a preferred charger and books a slot through beckn APIs to avoid waiting on arrival.
+Aisha is driving her electric vehicle along the highway when she notices that his battery level is getting low. Using an EV Charging application(BAP), Aisha discovers nearby charging stations that are compatible with her vehicle. The application retrieves available slots and charger specifications from the available provider's (BPP). Aisha selects a preferred charger and books a slot through the application via beckn APIs to avoid waiting on arrival.
 
 #### 11.2.0.2. Discovery
 **11.2.0.2.1. Adam discovers nearby charging services**
-About 30 minutes before lunch, Adam opens his EV Charging BAP (powered by a Beckn-enabled discovery network).
-He filters for:
+Aisha opens her EV Charging BAP (powered by a Beckn-enabled discovery network).
+She filters for:
 * DC Fast chargers within 5 km of her location,
 * Connector Type: CCS2,
 * Amenities: restaurants or cafes,
@@ -414,7 +407,7 @@ The app queries multiple charging providers and returns options showing:
 She compares them and selects "EcoPower Highway Hub – Mandya Food Court".
 
 #### 11.2.0.3. Order (Reservation)
-Adam taps Reserve Slot → 12:45–11:15 PM.
+Aisha taps Reserve Slot → 12:45–11:15 PM.
 The app displays the session terms:
 
 | Term | Example |
@@ -425,28 +418,28 @@ The app displays the session terms:
 | **Cancellation rules** | Free up to 15 min before |
 | **Payment options** | Hold, Pre-pay, Post-pay |
 
-They confirm. The provider returns a reservation ID and QR code, plus a navigation link to the site.
+She pays for 500 rupees through her credit card. The provider returns a reservation ID on confirmation of the payment being recieved.
 
 #### 11.2.0.4. Fulfilment (Session Start & Tracking)
-On arrival, Adam scans the charger's QR code.
-The backend matches it to her reservation ID, verifies her OTP authorization, and starts charging.
-In-app, he views live telemetry:
+On arrival, Aisha iniates start charging on her application.
+The backend matches it to her reservation ID and informs her to insert the charging gun to start charging.
+In-app, she views live telemetry:
 * Energy dispensed (kWh)
 * Elapsed time (min)
 * Running cost (₹)
 * Estimated completion time
 
-He enjoys lunch while the system manages the session.
+She enjoys lunch while the system manages the session.
 If she arrives a few minutes late, the charger holds the slot until the grace period expires.
 
 #### 11.2.0.5. Post-Fulfilment
-Charging auto-stops at her target energy level (80 %) or when she manually ends the session.
+Charging auto-stops at her requested amount or when she manually ends the session.
 The system issues a digital invoice, updates her wallet balance, and prompts for quick feedback:
 * Amenity rating (1–5)
 * Overall experience (1–5)
 * Optional text comments.
 
-Satisfied, Adam resumes his trip—arriving in Mysuru with time to spare.
+Satisfied, Aisha resumes her trip with time to spare.
 
 #### 11.2.1. API Calls and Schema
 
@@ -455,12 +448,3 @@ Consumers can search for EV charging stations with specific criteria including l
 * **Method:** POST
 * **Use Cases:** Adam opens his EV Charging BAP (powered by a Beckn-enabled discovery network). He filters for chargers within 5 km of his location.
 
-**Request:**
-* **11.2.1.1.1. Discovery of EV charging services within a circular boundary**
-    * *See Annexure for example JSON*
-* **11.2.1.1.2. Discovery of EV charging stations along a route**
-    * *See Annexure for example JSON*
-* **11.2.1.1.3. Discovery within circle + connector specs as filters**
-    * *See Annexure for example JSON*
-* **11.2.1.1.4. Discovery within circle + vehicle specifications as filters**
-    * *See Annexure for example JSON*
