@@ -85,7 +85,8 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 The section defines the reference ecosystem architecture that is used for building this implementation guide.
 
 ### 8.1. Architecture Diagram
-*[Architecture diagram would be placed here]*
+![Architectural Diagram](/Users/akarsh/Desktop/UBC/image.png)
+
 
 ### 8.2. Actors
 * Catalog Discovery Service
