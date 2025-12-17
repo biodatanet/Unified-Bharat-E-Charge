@@ -95,7 +95,7 @@ Implementation Guide \- EV Charging \- Version 0.8 (DRAFT) <!-- omit from toc --
           - [13.2.1.14.0.2. **B) Overcharge (Charger Offline to CMS; Keeps Dispensing)**](#13211402-b-overcharge-charger-offline-to-cms-keeps-dispensing)
       - [13.2.1.15. Asynchronous `action: on_update` (stop charging)](#132115-asynchronous-action-on_update-stop-charging)
       - [13.2.1.16. Synchronous/Asynchronous on\_update (stop charging)](#132116-synchronousasynchronous-on_update-stop-charging)
-      - [13.2.1.17. `atcion: cancel`](#132117-atcion-cancel)
+      - [13.2.1.17. `action: cancel`](#132117-action-cancel)
       - [13.2.1.18. `action: on_cancel`](#132118-action-on_cancel)
       - [13.2.1.19. `action: rating`](#132119-action-rating)
       - [13.2.1.20. `action: on_rating`](#132120-action-on_rating)
@@ -173,16 +173,16 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 # 9. Terminology
 
-| Acronym | Full Form/Description | Description |
-| ----- | ----- | ----- |
-| BAP | Beckn Application Platform | Consumer-facing application that initiates transactions. Mapped to EV users and eMSPs. |
-| BPP | Beckn Provider Platform | Service provider platform that responds to BAP requests. Mapped to CPOs.  |
-| NFO | Network Facilitator Organization | Organization responsible for the adoption and growth of the network. Usually the custodian of the network’s registry. |
-| CDS | Catalog Discovery Service | Enables discovery of charging services from BPPs in the network. |
-| eMSP | e-Mobility Service Provider | Service provider that aggregates multiple CPOs. Generally onboarded by BAPs.  |
-| CPO | Charge Point Operator | Entity that owns and operates charging infrastructure. Generally onboarded by BPPs.  |
-| EVSE | Electric Vehicle Supply Equipment | Individual charging station unit. Owned and operated by CPOs |
-| OCPI | Open Charge Point Interface | Protocol for communication between eMSPs and CPOs. |
+| Acronym | Full Form/Description             | Description                                                                                                           |
+| ------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| BAP     | Beckn Application Platform        | Consumer-facing application that initiates transactions. Mapped to EV users and eMSPs.                                |
+| BPP     | Beckn Provider Platform           | Service provider platform that responds to BAP requests. Mapped to CPOs.                                              |
+| NFO     | Network Facilitator Organization  | Organization responsible for the adoption and growth of the network. Usually the custodian of the network’s registry. |
+| CDS     | Catalog Discovery Service         | Enables discovery of charging services from BPPs in the network.                                                      |
+| eMSP    | e-Mobility Service Provider       | Service provider that aggregates multiple CPOs. Generally onboarded by BAPs.                                          |
+| CPO     | Charge Point Operator             | Entity that owns and operates charging infrastructure. Generally onboarded by BPPs.                                   |
+| EVSE    | Electric Vehicle Supply Equipment | Individual charging station unit. Owned and operated by CPOs                                                          |
+| OCPI    | Open Charge Point Interface       | Protocol for communication between eMSPs and CPOs.                                                                    |
 
 > Note:
 > This document does not detail the mapping between Beckn Protocol and OCPI. Please refer to [this](../../../docs/implementation-guides/v1-EOS/DEG00x_Mapping-OCPI-and-Beckn-Protocol-for-EV-Charging-Interoperability.md) document for the same.
@@ -302,7 +302,7 @@ Specifically, for EV Charging, please use the following configuration:
 
 ### 11.2.3. 10.2.3 Performing a test EV charging transaction
 
-Step 1 : Download the postman collection, from here.
+Step 1 : Download the postman collection, from [here](/testnet/postman-collections/v2/EV_Charging/).
 
 Step 2 : Run API calls
 
@@ -331,11 +331,11 @@ Each entity in the charging lifecycle — the service, the commercial terms, and
 
 ## 12.2. Semantic Model
 
-| EV Charging Domain Entity | Charging Example | Semantically maps to |
-| ----- | ----- | :---: |
-| Charging Service Listing | “DC Fast-Charging (60 kW CCS2)” | [Item](https://github.com/beckn/protocol-specifications-new/tree/schema-reorg/schema/EvChargingService/v1/attributes.yaml)  |
-| Charging service | “₹18 per kWh”, “₹150 per hour”, “₹999 monthly pass”, “Off-peak discount 2 AM–5 AM” | [Offer](https://github.com/beckn/protocol-specifications-new/blob/schema-reorg/schema/EvChargingOffer/v1/attributes.yaml) |
-| Charging Session | A specific booking or usage instance created when the user plugs in or reserves a slot | [Order](https://github.com/beckn/protocol-specifications-new/tree/schema-reorg/schema/EvChargingSession/v1/attributes.yaml) |
+| EV Charging Domain Entity | Charging Example                                                                       |                                                    Semantically maps to                                                     |
+| ------------------------- | -------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------: |
+| Charging Service Listing  | “DC Fast-Charging (60 kW CCS2)”                                                        | [Item](https://github.com/beckn/protocol-specifications-new/tree/schema-reorg/schema/EvChargingService/v1/attributes.yaml)  |
+| Charging service          | “₹18 per kWh”, “₹150 per hour”, “₹999 monthly pass”, “Off-peak discount 2 AM–5 AM”     |  [Offer](https://github.com/beckn/protocol-specifications-new/blob/schema-reorg/schema/EvChargingOffer/v1/attributes.yaml)  |
+| Charging Session          | A specific booking or usage instance created when the user plugs in or reserves a slot | [Order](https://github.com/beckn/protocol-specifications-new/tree/schema-reorg/schema/EvChargingSession/v1/attributes.yaml) |
 
 ## 12.3. Example Category Codes
 
@@ -344,7 +344,7 @@ The following section contains example category codes that can be
 Charger types
 
 | Code      | What it means                                                                              |
-|-----------|--------------------------------------------------------------------------------------------|
+| --------- | ------------------------------------------------------------------------------------------ |
 | AC\_SLOW  | AC charge points in the “slow” band (≈ 3–7 kW).                                            |
 | AC\_FAST  | AC “fast” public charging (≈ 7–22 kW; UK fast band 8–49 kW covers AC up to \~22 kW).       |
 | DC\_FAST  | DC “rapid/fast” typically \~50–149 kW.                                                     |
@@ -353,7 +353,7 @@ Charger types
 Connector types
 
 | Code    | What it means                                                                           |
-|---------|-----------------------------------------------------------------------------------------|
+| ------- | --------------------------------------------------------------------------------------- |
 | TYPE1   | Type 1 (SAE J1772) AC connector (North America/JP usage).                               |
 | TYPE2   | Type 2 (IEC 62196-2) AC connector; EU standard.                                         |
 | CCS2    | Combined Charging System “Combo 2” (IEC 62196 based) enabling high-power DC on Type 2\. |
@@ -363,7 +363,7 @@ Connector types
 Service types
 
 | Code                     | What it means                                                                                                                  |
-|--------------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
 | GREEN\_ENERGY\_CERTIFIED | Flag that the site/session is supplied by verified green energy per catalog metadata (e.g., OCPI EnergyMix.is\_green\_energy). |
 | GO\_EU                   | Energy backed by EU Guarantees of Origin (GOs).                                                                                |
 | REGO\_UK                 | Energy backed by the UK Renewable Energy Guarantees of Origin (REGO) scheme.                                                   |
@@ -410,7 +410,7 @@ Note: The API calls and schema for walk-in charging are identical to the [advanc
 - Request: Fetching details of a specific charger (EVSE) after reaching site (using its identifier): [Example](../../../examples/ev_charging/01_discover/discovery-by-EVSE.json)
 
 <details>
-<summary><a href="../../../examples/ev_charging/01_discover/discovery-by-EVSE.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/01_discover/discovery-by-EVSE.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -420,12 +420,14 @@ Note: The API calls and schema for walk-in charging are identical to the [advanc
     "domain": "beckn.one:deg:ev-charging:*",
     "bap_id": "app.example.com",
     "bap_uri": "https://app.example.com/bap",
+    "bpp_id": "example-cds.com",
+    "bpp_uri": "https://example-cds.com/pilot/cds/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "a1eabf26-29f5-4a01-9d4e-4c5c9d1a3d02",
     "timestamp": "2025-10-14T07:31:00Z",
     "ttl": "PT30S",
     "schema_context": [
-      "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingService/v1/context.jsonld"
+      "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingService/v1/context.jsonld"
     ]
   },
   "message": {
@@ -465,7 +467,7 @@ Note: Users can discover the charging station through off-network channels (such
 - Request: 
 
 <details>
-<summary><a href="../../../examples/ev_charging/02_on_discover/specific-evse-catalog.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/02_on_discover/specific-evse-catalog.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -476,20 +478,25 @@ Note: Users can discover the charging station through off-network channels (such
     "timestamp": "2024-01-15T10:30:05Z",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "a1eabf26-29f5-4a01-9d4e-4c5c9d1a3d02",
-    "bpp_id": "bpp.example.com",
-    "bpp_uri": "https://bpp.example.com",
-    "ttl": "PT30S"
+    "bap_id": "app.example.com",
+    "bap_uri": "https://app.example.com/bap",
+    "ttl": "PT30S",
+    "bpp_id": "example-cds.com",
+    "bpp_uri": "https://example-cds.com/pilot/cds/energy/v2"
   },
   "message": {
     "catalogs": [
       {
         "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
         "@type": "beckn:Catalog",
+        "beckn:id": "catalog-ev-charging-001",
         "beckn:descriptor": {
           "@type": "beckn:Descriptor",
           "schema:name": "EV Charging Services Network",
           "beckn:shortDesc": "Comprehensive network of fast charging stations across Bengaluru"
         },
+        "beckn:bppId": "bpp.ev-network.example.com",
+        "beckn:bppUri": "https://bpp.ev-network.example.com/bpp",
         "beckn:validity": {
           "@type": "beckn:TimePeriod",
           "schema:startDate": "2024-10-01T00:00:00Z",
@@ -529,11 +536,13 @@ Note: Users can discover the charging station through off-network channels (such
                 }
               }
             ],
-            "beckn:availabilityWindow": {
-              "@type": "beckn:TimePeriod",
-              "schema:startTime": "06:00:00",
-              "schema:endTime": "22:00:00"
-            },
+            "beckn:availabilityWindow": [
+              {
+                "@type": "beckn:TimePeriod",
+                "schema:startTime": "06:00:00",
+                "schema:endTime": "22:00:00"
+              }
+            ],
             "beckn:rateable": true,
             "beckn:rating": {
               "@type": "beckn:Rating",
@@ -552,7 +561,7 @@ Note: Users can discover the charging station through off-network channels (such
               }
             },
             "beckn:itemAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingService/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingService/v1/context.jsonld",
               "@type": "ChargingService",
               "connectorType": "CCS2",
               "maxPowerKW": 60,
@@ -577,9 +586,9 @@ Note: Users can discover the charging station through off-network channels (such
                 }
               },
               "amenityFeature": [
-                "Restaurant",
-                "Restroom",
-                "WiFi"
+                "RESTAURANT",
+                "RESTROOM",
+                "WI-FI"
               ],
               "ocppId": "IN-ECO-BTM-01",
               "evseId": "IN*ECO*BTM*01*CCS2*A",
@@ -625,11 +634,13 @@ Note: Users can discover the charging station through off-network channels (such
                 }
               }
             ],
-            "beckn:availabilityWindow": {
-              "@type": "beckn:TimePeriod",
-              "schema:startTime": "06:00:00",
-              "schema:endTime": "22:00:00"
-            },
+            "beckn:availabilityWindow": [
+              {
+                "@type": "beckn:TimePeriod",
+                "schema:startTime": "06:00:00",
+                "schema:endTime": "22:00:00"
+              }
+            ],
             "beckn:rateable": true,
             "beckn:rating": {
               "@type": "beckn:Rating",
@@ -648,7 +659,7 @@ Note: Users can discover the charging station through off-network channels (such
               }
             },
             "beckn:itemAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingService/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingService/v1/context.jsonld",
               "@type": "ChargingService",
               "connectorType": "CCS2",
               "maxPowerKW": 60,
@@ -673,9 +684,9 @@ Note: Users can discover the charging station through off-network channels (such
                 }
               },
               "amenityFeature": [
-                "Restaurant",
-                "Restroom",
-                "WiFi"
+                "RESTAURANT",
+                "RESTROOM",
+                "WI-FI"
               ],
               "ocppId": "IN-ECO-BTM-01",
               "evseId": "IN*ECO*BTM*01*CCS2*A",
@@ -691,7 +702,7 @@ Note: Users can discover the charging station through off-network channels (such
         ],
         "beckn:offers": [
           {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "eco-charge-offer-ccs2-60kw-kwh",
             "beckn:descriptor": {
@@ -721,7 +732,7 @@ Note: Users can discover the charging station through off-network channels (such
               "WALLET"
             ],
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
@@ -732,7 +743,7 @@ Note: Users can discover the charging station through off-network channels (such
             "beckn:provider": "GoGreen-charging"
           },
           {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "go-green-offer-ccs2-60kw-kwh",
             "beckn:descriptor": {
@@ -761,7 +772,7 @@ Note: Users can discover the charging station through off-network channels (such
               "CREDIT_CARD"
             ],
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
@@ -776,7 +787,6 @@ Note: Users can discover the charging station through off-network channels (such
     ]
   }
 }
-
 ```
 </details>
 
@@ -801,7 +811,7 @@ CPO returns details of a specific charger: [Example](../../../examples/ev_chargi
 - Request: 
 
 <details>
-<summary><a href="../../../examples/ev_charging/03_select/time-based-ev-charging-slot-select.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/03_select/time-based-ev-charging-slot-select.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -812,17 +822,27 @@ CPO returns details of a specific charger: [Example](../../../examples/ev_chargi
     "timestamp": "2024-01-15T10:30:00Z",
     "message_id": "bb9f86db-9a3d-4e9c-8c11-81c8f1a7b901",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
-    "bap_id": "bap.example.com",
-    "bap_uri": "https://bap.example.com",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
     "ttl": "PT30S"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-ev-charging-001",
       "beckn:orderStatus": "CREATED",
       "beckn:seller": "ecopower-charging",
+      "beckn:buyer": {
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@type": "beckn:Buyer",
+        "beckn:id": "user-123",
+        "beckn:role": "BUYER",
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
+      },
       "beckn:orderValue": {
         "currency": "INR",
         "value": 100.0
@@ -837,7 +857,7 @@ CPO returns details of a specific charger: [Example](../../../examples/ev_chargi
             "unitQuantity": 2.5
           },
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-ccs2-60kw-kwh",
             "beckn:descriptor": {
@@ -847,6 +867,7 @@ CPO returns details of a specific charger: [Example](../../../examples/ev_chargi
             "beckn:items": [
               "ev-charger-ccs2-001"
             ],
+            "beckn:provider": "ecopower-charging",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -867,7 +888,7 @@ CPO returns details of a specific charger: [Example](../../../examples/ev_chargi
               "WALLET"
             ],
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
@@ -877,15 +898,7 @@ CPO returns details of a specific charger: [Example](../../../examples/ev_chargi
             }
           }
         }
-      ],
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "buyerFinderFee": {
-          "feeType": "PERCENTAGE",
-          "feeValue": 2.5
-        }
-      }
+      ]
     }
   }
 }
@@ -914,7 +927,7 @@ EV user requests charge worth specific amount in currency: [Example](../../../ex
 - Request: 
 
 <details>
-<summary><a href="../../../examples/ev_charging/04_on_select/time-based-ev-charging-slot-on-select.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/04_on_select/time-based-ev-charging-slot-on-select.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -925,17 +938,27 @@ EV user requests charge worth specific amount in currency: [Example](../../../ex
     "timestamp": "2024-01-15T10:30:05Z",
     "message_id": "bb9f86db-9a3d-4e9c-8c11-81c8f1a7b901",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
-    "bpp_id": "bpp.example.com",
-    "bpp_uri": "https://bpp.example.com",
-    "ttl": "PT30S"
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://example-bap.com/pilot/bap/energy/v2",
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-ev-charging-001",
       "beckn:orderStatus": "PENDING",
       "beckn:seller": "ecopower-charging",
+      "beckn:buyer": {
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@type": "beckn:Buyer",
+        "beckn:id": "user-123",
+        "beckn:role": "BUYER",
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
+      },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
@@ -946,7 +969,7 @@ EV user requests charge worth specific amount in currency: [Example](../../../ex
             "unitQuantity": 2.5
           },
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-ccs2-60kw-kwh",
             "beckn:descriptor": {
@@ -956,6 +979,7 @@ EV user requests charge worth specific amount in currency: [Example](../../../ex
             "beckn:items": [
               "ev-charger-ccs2-001"
             ],
+            "beckn:provider": "ecopower-charging",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -976,7 +1000,7 @@ EV user requests charge worth specific amount in currency: [Example](../../../ex
               "WALLET"
             ],
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
@@ -1033,7 +1057,7 @@ EV user requests charge worth specific amount in currency: [Example](../../../ex
         ]
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -1051,12 +1075,12 @@ EV user requests charge worth specific amount in currency: [Example](../../../ex
         "beckn:paymentStatus": "PENDING"
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-charging-001",
         "beckn:mode": "RESERVATION",
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "sessionStatus": "PENDING",
           "authorizationMode": "APP_QR",
@@ -1073,7 +1097,6 @@ EV user requests charge worth specific amount in currency: [Example](../../../ex
     }
   }
 }
-
 ```
 </details>
 
@@ -1098,7 +1121,7 @@ CPO responds with dynamically calculated quote: [Example](../../../examples/ev_c
 - Request: 
 
 <details>
-<summary><a href="../../../examples/ev_charging/05_init/time-based-ev-charging-slot-init.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/05_init/time-based-ev-charging-slot-init.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -1106,48 +1129,47 @@ CPO responds with dynamically calculated quote: [Example](../../../examples/ev_c
     "version": "2.0.0",
     "action": "init",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bap_id": "example-bap.com",
-    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "6743e9e2-4fb5-487c-92b7-13ba8018f176",
     "timestamp": "2025-01-27T10:00:00Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-123456",
       "beckn:orderStatus": "PENDING",
       "beckn:seller": "cpo1.com",
       "beckn:buyer": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Buyer",
         "beckn:id": "user-123",
         "beckn:role": "BUYER",
-        "beckn:name": "Ravi Kumar",
-        "beckn:organization": {
-          "descriptor": {
-            "name": "GreenCharge Pvt Ltd"
-          }
-        },
-        "beckn:address": "Apartment 123, MG Road, Bengaluru, Karnataka, 560001, India",
-        "beckn:email": "ravi.kumar@greencharge.com",
-        "beckn:phone": "+918765432100",
-        "beckn:taxId": "GSTIN29ABCDE1234F1Z5"
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
       },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
           "beckn:orderedItem": "pe-charging-01",
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-001",
             "beckn:descriptor": {
+              "@type": "beckn:Descriptor",
               "name": "EV Charging Session Offer",
               "short_desc": "Fast charging session with CCS2 connector"
             },
+            "beckn:items": [
+              "pe-charging-01"
+            ],
+            "beckn:provider": "cpo1.com",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -1163,14 +1185,12 @@ CPO responds with dynamically calculated quote: [Example](../../../examples/ev_c
               "schema:endDate": "2025-04-27T23:59:59Z"
             },
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
-              "offerType": "CHARGING_SESSION",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
                 "feeValue": 2.0
-              },
-              "discountPercentage": 20.0
+              }
             }
           },
           "beckn:quantity": {
@@ -1226,7 +1246,7 @@ CPO responds with dynamically calculated quote: [Example](../../../examples/ev_c
         ]
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -1244,12 +1264,12 @@ CPO responds with dynamically calculated quote: [Example](../../../examples/ev_c
         "beckn:paymentStatus": "INITIATED"
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "sessionStatus": "PENDING",
           "connectorType": "CCS2",
@@ -1257,24 +1277,10 @@ CPO responds with dynamically calculated quote: [Example](../../../examples/ev_c
           "vehicleMake": "Tata",
           "vehicleModel": "Nexon EV"
         }
-      },
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "sessionPreferences": {
-          "preferredStartTime": "2025-01-27T10:00:00Z",
-          "preferredEndTime": "2025-01-27T11:30:00Z",
-          "notificationPreferences": {
-            "email": true,
-            "sms": true,
-            "push": false
-          }
-        }
       }
     }
   }
 }
-
 ```
 </details>
 
@@ -1300,7 +1306,7 @@ EV user requests final quote with payment terms by providing billing details: [E
 - Request: 
 
 <details>
-<summary><a href="../../../examples/ev_charging/06_on_init/time-based-ev-charging-slot-on-init.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/06_on_init/time-based-ev-charging-slot-on-init.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -1308,49 +1314,48 @@ EV user requests final quote with payment terms by providing billing details: [E
     "version": "2.0.0",
     "action": "on_init",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bpp_id": "example-bpp.com",
-    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://example-bap.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "6743e9e2-4fb5-487c-92b7-13ba8018f176",
     "timestamp": "2025-01-27T10:00:00Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-123456",
       "beckn:orderStatus": "PENDING",
       "beckn:orderNumber": "ORD-2025-001",
       "beckn:seller": "cpo1.com",
       "beckn:buyer": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Buyer",
         "beckn:id": "user-123",
         "beckn:role": "BUYER",
-        "beckn:name": "Ravi Kumar",
-        "beckn:organization": {
-          "descriptor": {
-            "name": "GreenCharge Pvt Ltd"
-          }
-        },
-        "beckn:address": "Apartment 123, MG Road, Bengaluru, Karnataka, 560001, India",
-        "beckn:email": "ravi.kumar@greencharge.com",
-        "beckn:phone": "+918765432100",
-        "beckn:taxId": "GSTIN29ABCDE1234F1Z5"
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
       },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
           "beckn:orderedItem": "pe-charging-01",
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-001",
             "beckn:descriptor": {
+              "@type": "beckn:Descriptor",
               "name": "EV Charging Session Offer",
               "short_desc": "Fast charging session with CCS2 connector"
             },
+            "beckn:items": [
+              "pe-charging-01"
+            ],
+            "beckn:provider": "cpo1.com",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -1366,14 +1371,12 @@ EV user requests final quote with payment terms by providing billing details: [E
               "schema:endDate": "2025-04-27T23:59:59Z"
             },
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
-              "offerType": "CHARGING_SESSION",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
                 "feeValue": 2.0
-              },
-              "discountPercentage": 20.0
+              }
             }
           },
           "beckn:quantity": {
@@ -1429,25 +1432,23 @@ EV user requests final quote with payment terms by providing billing details: [E
         ]
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "connectorType": "CCS2",
           "maxPowerKW": 50,
-          "authorization": {
-            "type": "OTP"
-          },
+          "authorizationMode": "OTP",
           "vehicleMake": "Tata",
           "vehicleModel": "Nexon EV",
           "sessionStatus": "PENDING"
         }
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -1463,25 +1464,10 @@ EV user requests final quote with payment terms by providing billing details: [E
           "WALLET"
         ],
         "beckn:paymentStatus": "INITIATED"
-      },
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "sessionPreferences": {
-          "preferredStartTime": "2025-01-27T10:00:00Z",
-          "preferredEndTime": "2025-01-27T11:30:00Z",
-          "notificationPreferences": {
-            "email": true,
-            "sms": true,
-            "push": false
-          }
-        },
-        "sessionStatus": "PENDING"
       }
     }
   }
 }
-
 ```
 </details>
 
@@ -1507,7 +1493,7 @@ CPO responds with final quote with payment terms: [Example](../../../examples/ev
 - Request: 
 
 <details>
-<summary><a href="../../../examples/ev_charging/06_on_status_1/time-based-ev-charging-slot-on-status.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/06_on_status_1/time-based-ev-charging-slot-on-status.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -1515,49 +1501,48 @@ CPO responds with final quote with payment terms: [Example](../../../examples/ev
     "version": "2.0.0",
     "action": "on_status",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bpp_id": "example-bpp.com",
-    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://example-bap.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "d4da89d5-2e42-4c36-9139-7f5682d5f104",
     "timestamp": "2025-01-27T10:05:00Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-123456",
       "beckn:orderStatus": "PENDING",
       "beckn:orderNumber": "ORD-2025-001",
       "beckn:seller": "cpo1.com",
       "beckn:buyer": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Buyer",
         "beckn:id": "user-123",
         "beckn:role": "BUYER",
-        "beckn:name": "Ravi Kumar",
-        "beckn:organization": {
-          "descriptor": {
-            "name": "GreenCharge Pvt Ltd"
-          }
-        },
-        "beckn:address": "Apartment 123, MG Road, Bengaluru, Karnataka, 560001, India",
-        "beckn:email": "ravi.kumar@greencharge.com",
-        "beckn:phone": "+918765432100",
-        "beckn:taxId": "GSTIN29ABCDE1234F1Z5"
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
       },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
           "beckn:orderedItem": "pe-charging-01",
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-001",
             "beckn:descriptor": {
+              "@type": "beckn:Descriptor",
               "name": "EV Charging Session Offer",
               "short_desc": "Fast charging session with CCS2 connector"
             },
+            "beckn:items": [
+              "pe-charging-01"
+            ],
+            "beckn:provider": "cpo1.com",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -1573,14 +1558,12 @@ CPO responds with final quote with payment terms: [Example](../../../examples/ev
               "schema:endDate": "2025-04-27T23:59:59Z"
             },
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
-              "offerType": "CHARGING_SESSION",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
                 "feeValue": 2.0
-              },
-              "discountPercentage": 20.0
+              }
             }
           },
           "beckn:quantity": {
@@ -1636,7 +1619,7 @@ CPO responds with final quote with payment terms: [Example](../../../examples/ev
         ]
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -1654,41 +1637,24 @@ CPO responds with final quote with payment terms: [Example](../../../examples/ev
         "beckn:paymentStatus": "COMPLETED"
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "connectorType": "CCS2",
           "maxPowerKW": 50,
-          "authorization": {
-            "type": "OTP"
-          },
+          "authorizationMode": "OTP",
           "vehicleMake": "Tata",
           "vehicleModel": "Nexon EV",
           "sessionStatus": "PENDING"
         }
-      },
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "sessionPreferences": {
-          "preferredStartTime": "2025-01-27T10:00:00Z",
-          "preferredEndTime": "2025-01-27T11:30:00Z",
-          "notificationPreferences": {
-            "email": true,
-            "sms": true,
-            "push": false
-          }
-        },
-        "sessionStatus": "PENDING"
       }
     }
   }
 }
-
 ```
 </details>
 
@@ -1701,7 +1667,7 @@ CPO sends the status of the payment: [Example](../../../examples/ev_charging/06_
 - Request: 
 
 <details>
-<summary><a href="../../../examples/ev_charging/07_confirm/time-based-ev-charging-slot-confirm.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/07_confirm/time-based-ev-charging-slot-confirm.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -1709,49 +1675,48 @@ CPO sends the status of the payment: [Example](../../../examples/ev_charging/06_
     "version": "2.0.0",
     "action": "confirm",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bap_id": "example-bap.com",
-    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "c69b4c1e-fb7e-469d-ae90-00f4d5e82b64",
     "timestamp": "2025-01-27T10:05:00Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-123456",
       "beckn:orderStatus": "PENDING",
       "beckn:orderNumber": "ORD-2025-001",
       "beckn:seller": "cpo1.com",
       "beckn:buyer": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Buyer",
         "beckn:id": "user-123",
         "beckn:role": "BUYER",
-        "beckn:name": "Ravi Kumar",
-        "beckn:organization": {
-          "descriptor": {
-            "name": "GreenCharge Pvt Ltd"
-          }
-        },
-        "beckn:address": "Apartment 123, MG Road, Bengaluru, Karnataka, 560001, India",
-        "beckn:email": "ravi.kumar@greencharge.com",
-        "beckn:phone": "+918765432100",
-        "beckn:taxId": "GSTIN29ABCDE1234F1Z5"
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
       },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
           "beckn:orderedItem": "pe-charging-01",
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-001",
             "beckn:descriptor": {
+              "@type": "beckn:Descriptor",
               "name": "EV Charging Session Offer",
               "short_desc": "Fast charging session with CCS2 connector"
             },
+            "beckn:items": [
+              "pe-charging-01"
+            ],
+            "beckn:provider": "cpo1.com",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -1767,14 +1732,12 @@ CPO sends the status of the payment: [Example](../../../examples/ev_charging/06_
               "schema:endDate": "2025-04-27T23:59:59Z"
             },
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
-              "offerType": "CHARGING_SESSION",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
                 "feeValue": 2.0
-              },
-              "discountPercentage": 20.0
+              }
             }
           },
           "beckn:quantity": {
@@ -1830,22 +1793,24 @@ CPO sends the status of the payment: [Example](../../../examples/ev_charging/06_
         ]
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "connectorType": "CCS2",
           "maxPowerKW": 50,
+          "authorizationMode": "OTP",
+          "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order",
           "vehicleMake": "Tata",
           "vehicleModel": "Nexon EV",
           "sessionStatus": "PENDING"
         }
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -1861,27 +1826,10 @@ CPO sends the status of the payment: [Example](../../../examples/ev_charging/06_
           "WALLET"
         ],
         "beckn:paymentStatus": "COMPLETED"
-      },
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "sessionPreferences": {
-          "preferredStartTime": "2025-01-27T10:00:00Z",
-          "preferredEndTime": "2025-01-27T11:30:00Z",
-          "notificationPreferences": {
-            "email": true,
-            "sms": true,
-            "push": false
-          }
-        },
-        "authorizationMode": "OTP",
-        "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order",
-        "sessionStatus": "PENDING"
       }
     }
   }
 }
-
 ```
 </details>
 
@@ -1906,7 +1854,7 @@ EV user confirms reservation of a slot at a particular charging station at a par
 - Request: 
 
 <details>
-<summary><a href="../../../examples/ev_charging/08_on_confirm/time-based-ev-charging-slot-on-confirm.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/08_on_confirm/time-based-ev-charging-slot-on-confirm.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -1914,49 +1862,48 @@ EV user confirms reservation of a slot at a particular charging station at a par
     "version": "2.0.0",
     "action": "on_confirm",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bpp_id": "example-bpp.com",
-    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://example-bap.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "c69b4c1e-fb7e-469d-ae90-00f4d5e82b64",
     "timestamp": "2025-01-27T10:05:00Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-bpp-789012",
       "beckn:orderStatus": "CONFIRMED",
       "beckn:orderNumber": "ORD-2025-001",
       "beckn:seller": "cpo1.com",
       "beckn:buyer": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Buyer",
         "beckn:id": "user-123",
         "beckn:role": "BUYER",
-        "beckn:name": "Ravi Kumar",
-        "beckn:organization": {
-          "descriptor": {
-            "name": "GreenCharge Pvt Ltd"
-          }
-        },
-        "beckn:address": "Apartment 123, MG Road, Bengaluru, Karnataka, 560001, India",
-        "beckn:email": "ravi.kumar@greencharge.com",
-        "beckn:phone": "+918765432100",
-        "beckn:taxId": "GSTIN29ABCDE1234F1Z5"
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
       },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
           "beckn:orderedItem": "pe-charging-01",
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-001",
             "beckn:descriptor": {
+              "@type": "beckn:Descriptor",
               "name": "EV Charging Session Offer",
               "short_desc": "Fast charging session with CCS2 connector"
             },
+            "beckn:items": [
+              "pe-charging-01"
+            ],
+            "beckn:provider": "cpo1.com",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -1972,14 +1919,12 @@ EV user confirms reservation of a slot at a particular charging station at a par
               "schema:endDate": "2025-04-27T23:59:59Z"
             },
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
-              "offerType": "CHARGING_SESSION",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
                 "feeValue": 2.0
-              },
-              "discountPercentage": 20.0
+              }
             }
           },
           "beckn:quantity": {
@@ -2035,22 +1980,24 @@ EV user confirms reservation of a slot at a particular charging station at a par
         ]
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "connectorType": "CCS2",
           "maxPowerKW": 50,
+          "authorizationMode": "OTP",
+          "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order",
           "vehicleMake": "Tata",
           "vehicleModel": "Nexon EV",
           "sessionStatus": "PENDING"
         }
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -2067,27 +2014,10 @@ EV user confirms reservation of a slot at a particular charging station at a par
           "WALLET"
         ],
         "beckn:paymentStatus": "COMPLETED"
-      },
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "sessionPreferences": {
-          "preferredStartTime": "2025-01-27T10:00:00Z",
-          "preferredEndTime": "2025-01-27T11:30:00Z",
-          "notificationPreferences": {
-            "email": true,
-            "sms": true,
-            "push": false
-          }
-        },
-        "authorizationMode": "OTP",
-        "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order",
-        "sessionStatus": "PENDING"
       }
     }
   }
 }
-
 ```
 </details>
 
@@ -2112,7 +2042,7 @@ CPO responds with confirmed slot: [Example](../../../examples/ev_charging/08_on_
 - Request: 
 
 <details>
-<summary><a href="../../../examples/ev_charging/09_update/ev-charging-session-start-update.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/09_update/ev-charging-session-start-update.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -2122,6 +2052,8 @@ CPO responds with confirmed slot: [Example](../../../examples/ev_charging/08_on_
     "domain": "beckn.one:deg:ev-charging:*",
     "bap_id": "example-bap.com",
     "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "6bd7be5b-ac21-4a5c-a787-5ec6980317e6",
     "timestamp": "2025-01-27T10:15:00Z",
@@ -2129,40 +2061,37 @@ CPO responds with confirmed slot: [Example](../../../examples/ev_charging/08_on_
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-bpp-789012",
       "beckn:orderStatus": "INPROGRESS",
       "beckn:orderNumber": "ORD-2025-001",
       "beckn:seller": "cpo1.com",
       "beckn:buyer": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Buyer",
         "beckn:id": "user-123",
         "beckn:role": "BUYER",
-        "beckn:name": "Ravi Kumar",
-        "beckn:organization": {
-          "descriptor": {
-            "name": "GreenCharge Pvt Ltd"
-          }
-        },
-        "beckn:address": "Apartment 123, MG Road, Bengaluru, Karnataka, 560001, India",
-        "beckn:email": "ravi.kumar@greencharge.com",
-        "beckn:phone": "+918765432100",
-        "beckn:taxId": "GSTIN29ABCDE1234F1Z5"
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
       },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
           "beckn:orderedItem": "pe-charging-01",
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-001",
             "beckn:descriptor": {
+              "@type": "beckn:Descriptor",
               "name": "EV Charging Session Offer",
               "short_desc": "Fast charging session with CCS2 connector"
             },
+            "beckn:items": [
+              "pe-charging-01"
+            ],
+            "beckn:provider": "cpo1.com",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -2178,14 +2107,12 @@ CPO responds with confirmed slot: [Example](../../../examples/ev_charging/08_on_
               "schema:endDate": "2025-04-27T23:59:59Z"
             },
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
-              "offerType": "CHARGING_SESSION",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
                 "feeValue": 2.0
-              },
-              "discountPercentage": 20.0
+              }
             }
           },
           "beckn:quantity": {
@@ -2241,23 +2168,24 @@ CPO responds with confirmed slot: [Example](../../../examples/ev_charging/08_on_
         ]
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "sessionStatus": "PENDING",
           "connectorType": "CCS2",
           "maxPowerKW": 50,
           "authorizationMode": "OTP",
+          "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order",
           "vehicleMake": "Tata",
           "vehicleModel": "Nexon EV"
         }
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -2274,26 +2202,10 @@ CPO responds with confirmed slot: [Example](../../../examples/ev_charging/08_on_
           "WALLET"
         ],
         "beckn:paymentStatus": "COMPLETED"
-      },
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "sessionPreferences": {
-          "preferredStartTime": "2025-01-27T10:00:00Z",
-          "preferredEndTime": "2025-01-27T11:30:00Z",
-          "notificationPreferences": {
-            "email": true,
-            "sms": true,
-            "push": false
-          }
-        },
-        "authorizationMode": "OTP",
-        "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order"
       }
     }
   }
 }
-
 ```
 </details>
 
@@ -2317,7 +2229,7 @@ EV user starts a charging session: [Example](../../../examples/ev_charging/09_up
 - Request: 
 
 <details>
-<summary><a href="../../../examples/ev_charging/10_on_update/time-based-ev-charging-slot-on-update.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/10_on_update/time-based-ev-charging-slot-on-update.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -2325,49 +2237,48 @@ EV user starts a charging session: [Example](../../../examples/ev_charging/09_up
     "version": "2.0.0",
     "action": "on_update",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bpp_id": "example-bpp.com",
-    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://example-bap.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "6bd7be5b-ac21-4a5c-a787-5ec6980317e6",
     "timestamp": "2025-01-27T10:15:30Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-bpp-789012",
       "beckn:orderStatus": "INPROGRESS",
       "beckn:orderNumber": "ORD-2025-001",
       "beckn:seller": "cpo1.com",
       "beckn:buyer": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Buyer",
         "beckn:id": "user-123",
         "beckn:role": "BUYER",
-        "beckn:name": "Ravi Kumar",
-        "beckn:organization": {
-          "descriptor": {
-            "name": "GreenCharge Pvt Ltd"
-          }
-        },
-        "beckn:address": "Apartment 123, MG Road, Bengaluru, Karnataka, 560001, India",
-        "beckn:email": "ravi.kumar@greencharge.com",
-        "beckn:phone": "+918765432100",
-        "beckn:taxId": "GSTIN29ABCDE1234F1Z5"
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
       },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
           "beckn:orderedItem": "pe-charging-01",
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-001",
             "beckn:descriptor": {
+              "@type": "beckn:Descriptor",
               "name": "EV Charging Session Offer",
               "short_desc": "Fast charging session with CCS2 connector"
             },
+            "beckn:items": [
+              "pe-charging-01"
+            ],
+            "beckn:provider": "cpo1.com",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -2383,14 +2294,12 @@ EV user starts a charging session: [Example](../../../examples/ev_charging/09_up
               "schema:endDate": "2025-04-27T23:59:59Z"
             },
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
-              "offerType": "CHARGING_SESSION",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
                 "feeValue": 2.0
-              },
-              "discountPercentage": 20.0
+              }
             }
           },
           "beckn:quantity": {
@@ -2446,23 +2355,24 @@ EV user starts a charging session: [Example](../../../examples/ev_charging/09_up
         ]
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "sessionStatus": "ACTIVE",
           "connectorType": "CCS2",
           "maxPowerKW": 50,
           "authorizationMode": "OTP",
+          "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order",
           "vehicleMake": "Tata",
           "vehicleModel": "Nexon EV"
         }
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -2479,26 +2389,10 @@ EV user starts a charging session: [Example](../../../examples/ev_charging/09_up
           "WALLET"
         ],
         "beckn:paymentStatus": "COMPLETED"
-      },
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "sessionPreferences": {
-          "preferredStartTime": "2025-01-27T10:00:00Z",
-          "preferredEndTime": "2025-01-27T11:30:00Z",
-          "notificationPreferences": {
-            "email": true,
-            "sms": true,
-            "push": false
-          }
-        },
-        "authorizationMode": "OTP",
-        "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order"
       }
     }
   }
 }
-
 ```
 </details>
 
@@ -2523,7 +2417,7 @@ CPO responds with confirmed start of charging session: [Example](../../../exampl
 - Request: 
 
 <details>
-<summary><a href="../../../examples/ev_charging/11_track/time-based-ev-charging-slot-track.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/11_track/time-based-ev-charging-slot-track.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -2533,6 +2427,8 @@ CPO responds with confirmed start of charging session: [Example](../../../exampl
     "domain": "beckn.one:deg:ev-charging:*",
     "bap_id": "example-bap.com",
     "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "6ace310b-6440-4421-a2ed-b484c7548bd5",
     "timestamp": "2025-01-27T17:00:40.065Z",
@@ -2540,10 +2436,27 @@ CPO responds with confirmed start of charging session: [Example](../../../exampl
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-bpp-789012",
-      "beckn:orderStatus": "INPROGRESS"
+      "beckn:orderStatus": "INPROGRESS",
+      "beckn:seller": "cpo1.com",
+      "beckn:buyer": {
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
+        "@type": "beckn:Buyer",
+        "beckn:id": "user-123"
+      },
+      "beckn:orderItems": [
+        {
+          "beckn:lineId": "line-001",
+          "beckn:orderedItem": "pe-charging-01",
+          "beckn:quantity": {
+            "unitText": "Kilowatt Hour",
+            "unitCode": "KWH",
+            "unitQuantity": 1
+          }
+        }
+      ]
     }
   }
 }
@@ -2572,7 +2485,7 @@ EV User tracks a live charging session in real-time: [Example](../../../examples
 - Request: 
 
 <details>
-<summary><a href="../../../examples/ev_charging/12_on_track/time-based-ev-charging-slot-on-track.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/12_on_track/time-based-ev-charging-slot-on-track.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -2580,27 +2493,40 @@ EV User tracks a live charging session in real-time: [Example](../../../examples
     "version": "2.0.0",
     "action": "on_track",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bpp_id": "example-bpp.com",
-    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://example-bap.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "6ace310b-6440-4421-a2ed-b484c7548bd5",
     "timestamp": "2025-01-27T17:00:40.065Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-bpp-789012",
       "beckn:orderStatus": "INPROGRESS",
+      "beckn:seller": "cpo1.com",
+      "beckn:buyer": {
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
+        "@type": "beckn:Buyer",
+        "beckn:id": "user-123"
+      },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
-          "beckn:orderedItem": "pe-charging-01"
+          "beckn:orderedItem": "pe-charging-01",
+          "beckn:quantity": {
+            "unitText": "Kilowatt Hour",
+            "unitCode": "KWH",
+            "unitQuantity": 1
+          }
         }
       ],
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
@@ -2613,28 +2539,68 @@ EV User tracks a live charging session in real-time: [Example](../../../examples
           "deliveryMethod": "RESERVATION",
           "reservationId": "TRACK-SESSION-9876543210"
         },
-        "deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingService/v1/context.jsonld",
+        "beckn:deliveryAttributes": {
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingService/v1/context.jsonld",
           "@type": "ChargingSession",
           "chargingTelemetry": [
             {
               "eventTime": "2025-01-27T17:00:00Z",
               "metrics": [
-                { "name": "STATE_OF_CHARGE", "value": 62.5, "unitCode": "PERCENTAGE" },
-                { "name": "POWER", "value": 18.4, "unitCode": "KWH" },
-                { "name": "ENERGY", "value": 10.2, "unitCode": "KW" },
-                { "name": "VOLTAGE", "value": 392, "unitCode": "VLT" },
-                { "name": "CURRENT", "value": 47.0, "unitCode": "AMP" }
+                {
+                  "name": "STATE_OF_CHARGE",
+                  "value": 62.5,
+                  "unitCode": "PERCENTAGE"
+                },
+                {
+                  "name": "POWER",
+                  "value": 18.4,
+                  "unitCode": "KWH"
+                },
+                {
+                  "name": "ENERGY",
+                  "value": 10.2,
+                  "unitCode": "KW"
+                },
+                {
+                  "name": "VOLTAGE",
+                  "value": 392,
+                  "unitCode": "VLT"
+                },
+                {
+                  "name": "CURRENT",
+                  "value": 47.0,
+                  "unitCode": "AMP"
+                }
               ]
             },
             {
               "eventTime": "2025-01-27T17:05:00Z",
               "metrics": [
-                { "name": "STATE_OF_CHARGE", "value": 65.0, "unitCode": "PERCENTAGE" },
-                { "name": "POWER", "value": 17.1, "unitCode": "KWH" },
-                { "name": "ENERGY", "value": 11.1, "unitCode": "KW" },
-                { "name": "VOLTAGE", "value": 388, "unitCode": "VLT" },
-                { "name": "CURRENT", "value": 44.2, "unitCode": "AMP" }
+                {
+                  "name": "STATE_OF_CHARGE",
+                  "value": 65.0,
+                  "unitCode": "PERCENTAGE"
+                },
+                {
+                  "name": "POWER",
+                  "value": 17.1,
+                  "unitCode": "KWH"
+                },
+                {
+                  "name": "ENERGY",
+                  "value": 11.1,
+                  "unitCode": "KW"
+                },
+                {
+                  "name": "VOLTAGE",
+                  "value": 388,
+                  "unitCode": "VLT"
+                },
+                {
+                  "name": "CURRENT",
+                  "value": 44.2,
+                  "unitCode": "AMP"
+                }
               ]
             }
           ]
@@ -2643,7 +2609,6 @@ EV User tracks a live charging session in real-time: [Example](../../../examples
     }
   }
 }
-
 ```
 </details>
 
@@ -2668,7 +2633,7 @@ EV User receives a live charging session in real-time: [Example](../../../exampl
 - Request: 
 
 <details>
-<summary><a href="../../../examples/ev_charging/13_on_status/time-based-ev-charging-slot-on-status.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/13_on_status/time-based-ev-charging-slot-on-status.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -2676,49 +2641,48 @@ EV User receives a live charging session in real-time: [Example](../../../exampl
     "version": "2.0.0",
     "action": "on_status",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bpp_id": "example-bpp.com",
-    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://example-bap.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "6743e9e2-4fb5-487c-92b7-13ba8018f176",
     "timestamp": "2025-01-27T13:07:02Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-bpp-789012",
       "beckn:orderStatus": "INPROGRESS",
       "beckn:orderNumber": "ORD-2025-001",
       "beckn:seller": "cpo1.com",
       "beckn:buyer": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Buyer",
         "beckn:id": "user-123",
         "beckn:role": "BUYER",
-        "beckn:name": "Ravi Kumar",
-        "beckn:organization": {
-          "descriptor": {
-            "name": "GreenCharge Pvt Ltd"
-          }
-        },
-        "beckn:address": "Apartment 123, MG Road, Bengaluru, Karnataka, 560001, India",
-        "beckn:email": "ravi.kumar@greencharge.com",
-        "beckn:phone": "+918765432100",
-        "beckn:taxId": "GSTIN29ABCDE1234F1Z5"
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
       },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
           "beckn:orderedItem": "pe-charging-01",
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-001",
             "beckn:descriptor": {
+              "@type": "beckn:Descriptor",
               "name": "EV Charging Session Offer",
               "short_desc": "Fast charging session with CCS2 connector"
             },
+            "beckn:items": [
+              "pe-charging-01"
+            ],
+            "beckn:provider": "cpo1.com",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -2734,14 +2698,12 @@ EV User receives a live charging session in real-time: [Example](../../../exampl
               "schema:endDate": "2025-04-27T23:59:59Z"
             },
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
-              "offerType": "CHARGING_SESSION",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
                 "feeValue": 2.0
-              },
-              "discountPercentage": 20.0
+              }
             }
           },
           "beckn:quantity": {
@@ -2797,7 +2759,7 @@ EV User receives a live charging session in real-time: [Example](../../../exampl
         ]
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
@@ -2811,18 +2773,19 @@ EV User receives a live charging session in real-time: [Example](../../../exampl
           "reservationId": "TRACK-SESSION-9876543210"
         },
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "sessionStatus": "INTERRUPTED",
           "connectorType": "CCS2",
           "maxPowerKW": 50,
           "authorizationMode": "OTP",
+          "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order",
           "vehicleMake": "Tata",
           "vehicleModel": "Nexon EV"
         }
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -2839,26 +2802,10 @@ EV User receives a live charging session in real-time: [Example](../../../exampl
           "WALLET"
         ],
         "beckn:paymentStatus": "COMPLETED"
-      },
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "sessionPreferences": {
-          "preferredStartTime": "2025-01-27T10:00:00Z",
-          "preferredEndTime": "2025-01-27T11:30:00Z",
-          "notificationPreferences": {
-            "email": true,
-            "sms": true,
-            "push": false
-          }
-        },
-        "authorizationMode": "OTP",
-        "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order"
       }
     }
   }
 }
-
 ```
 </details>
 
@@ -2883,7 +2830,7 @@ EV user reveives a notification in case of any error occuring during charging se
 - Request: 
 
 <details>
-<summary><a href="../../../examples/ev_charging/09_update/ev-charging-session-end-update.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/09_update/ev-charging-session-end-update.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -2891,49 +2838,48 @@ EV user reveives a notification in case of any error occuring during charging se
     "version": "2.0.0",
     "action": "update",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bap_id": "example-bap.com",
-    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "6bd7be5b-ac21-4a5c-a787-5ec6980317e6",
     "timestamp": "2025-01-27T10:15:00Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-bpp-789012",
       "beckn:orderStatus": "INPROGRESS",
       "beckn:orderNumber": "ORD-2025-001",
       "beckn:seller": "cpo1.com",
       "beckn:buyer": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Buyer",
         "beckn:id": "user-123",
         "beckn:role": "BUYER",
-        "beckn:name": "Ravi Kumar",
-        "beckn:organization": {
-          "descriptor": {
-            "name": "GreenCharge Pvt Ltd"
-          }
-        },
-        "beckn:address": "Apartment 123, MG Road, Bengaluru, Karnataka, 560001, India",
-        "beckn:email": "ravi.kumar@greencharge.com",
-        "beckn:phone": "+918765432100",
-        "beckn:taxId": "GSTIN29ABCDE1234F1Z5"
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
       },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
           "beckn:orderedItem": "pe-charging-01",
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-001",
             "beckn:descriptor": {
+              "@type": "beckn:Descriptor",
               "name": "EV Charging Session Offer",
               "short_desc": "Fast charging session with CCS2 connector"
             },
+            "beckn:items": [
+              "pe-charging-01"
+            ],
+            "beckn:provider": "cpo1.com",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -2949,14 +2895,12 @@ EV user reveives a notification in case of any error occuring during charging se
               "schema:endDate": "2025-04-27T23:59:59Z"
             },
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
-              "offerType": "CHARGING_SESSION",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
                 "feeValue": 2.0
-              },
-              "discountPercentage": 20.0
+              }
             }
           },
           "beckn:quantity": {
@@ -3012,23 +2956,24 @@ EV user reveives a notification in case of any error occuring during charging se
         ]
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "sessionStatus": "COMPLETED",
           "connectorType": "CCS2",
           "maxPowerKW": 50,
           "authorizationMode": "OTP",
+          "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order",
           "vehicleMake": "Tata",
           "vehicleModel": "Nexon EV"
         }
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -3045,26 +2990,10 @@ EV user reveives a notification in case of any error occuring during charging se
           "WALLET"
         ],
         "beckn:paymentStatus": "COMPLETED"
-      },
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "sessionPreferences": {
-          "preferredStartTime": "2025-01-27T10:00:00Z",
-          "preferredEndTime": "2025-01-27T11:30:00Z",
-          "notificationPreferences": {
-            "email": true,
-            "sms": true,
-            "push": false
-          }
-        },
-        "authorizationMode": "OTP",
-        "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order"
       }
     }
   }
 }
-
 ```
 </details>
 
@@ -3077,7 +3006,7 @@ EV user stops the charging session: [Example](../../../examples/ev_charging/09_u
 - Request:
 
 <details>
-<summary><a href="../../../examples/ev_charging/14_on_update/time-based-ev-charging-slot-on-update.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/14_on_update/time-based-ev-charging-slot-on-update.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -3085,49 +3014,48 @@ EV user stops the charging session: [Example](../../../examples/ev_charging/09_u
     "version": "2.0.0",
     "action": "on_update",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bpp_id": "example-bpp.com",
-    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://example-bap.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "32f67afe-3d8c-4faa-bc2e-93b0791dcb02",
     "timestamp": "2025-01-27T11:45:00Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-bpp-789012",
       "beckn:orderStatus": "COMPLETED",
       "beckn:orderNumber": "ORD-2025-001",
       "beckn:seller": "cpo1.com",
       "beckn:buyer": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Buyer",
         "beckn:id": "user-123",
         "beckn:role": "BUYER",
-        "beckn:name": "Ravi Kumar",
-        "beckn:organization": {
-          "descriptor": {
-            "name": "GreenCharge Pvt Ltd"
-          }
-        },
-        "beckn:address": "Apartment 123, MG Road, Bengaluru, Karnataka, 560001, India",
-        "beckn:email": "ravi.kumar@greencharge.com",
-        "beckn:phone": "+918765432100",
-        "beckn:taxId": "GSTIN29ABCDE1234F1Z5"
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
       },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
           "beckn:orderedItem": "pe-charging-01",
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-001",
             "beckn:descriptor": {
+              "@type": "beckn:Descriptor",
               "name": "EV Charging Session Offer",
               "short_desc": "Fast charging session with CCS2 connector"
             },
+            "beckn:items": [
+              "pe-charging-01"
+            ],
+            "beckn:provider": "cpo1.com",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -3143,14 +3071,12 @@ EV user stops the charging session: [Example](../../../examples/ev_charging/09_u
               "schema:endDate": "2025-04-27T23:59:59Z"
             },
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
-              "offerType": "CHARGING_SESSION",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
                 "feeValue": 2.0
-              },
-              "discountPercentage": 20.0
+              }
             }
           },
           "beckn:quantity": {
@@ -3206,7 +3132,7 @@ EV user stops the charging session: [Example](../../../examples/ev_charging/09_u
         ]
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
@@ -3220,18 +3146,19 @@ EV user stops the charging session: [Example](../../../examples/ev_charging/09_u
           "reservationId": "TRACK-SESSION-9876543210"
         },
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "sessionStatus": "COMPLETED",
           "connectorType": "CCS2",
           "maxPowerKW": 50,
           "authorizationMode": "OTP",
+          "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order",
           "vehicleMake": "Tata",
           "vehicleModel": "Nexon EV"
         }
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -3248,26 +3175,10 @@ EV user stops the charging session: [Example](../../../examples/ev_charging/09_u
           "WALLET"
         ],
         "beckn:paymentStatus": "COMPLETED"
-      },
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "sessionPreferences": {
-          "preferredStartTime": "2025-01-27T10:00:00Z",
-          "preferredEndTime": "2025-01-27T11:30:00Z",
-          "notificationPreferences": {
-            "email": true,
-            "sms": true,
-            "push": false
-          }
-        },
-        "authorizationMode": "OTP",
-        "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order"
       }
     }
   }
 }
-
 ```
 </details>
 
@@ -3292,7 +3203,7 @@ EV user receives the session details upon chargign session end: [Example](../../
 - Request: 
 
 <details>
-<summary><a href="../../../examples/ev_charging/15_rating/time-based-ev-charging-slot-rating.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/15_rating/time-based-ev-charging-slot-rating.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -3300,12 +3211,14 @@ EV user receives the session details upon chargign session end: [Example](../../
     "version": "2.0.0",
     "action": "rating",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bap_id": "example-bap.com",
-    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "89ee20fe-b592-48b0-a5c5-e38f6b90e569",
     "timestamp": "2025-01-27T12:00:00Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2"
   },
   "message": {
     "id": "fulfillment-001",
@@ -3315,11 +3228,16 @@ EV user receives the session details upon chargign session end: [Example](../../
     "category": "fulfillment",
     "feedback": {
       "comments": "Excellent charging experience! The station was clean, easy to find, and the charging was fast and reliable. The staff was helpful and the payment process was smooth.",
-      "tags": ["fast-charging", "easy-to-use", "clean-station", "helpful-staff", "smooth-payment"]
+      "tags": [
+        "fast-charging",
+        "easy-to-use",
+        "clean-station",
+        "helpful-staff",
+        "smooth-payment"
+      ]
     }
   }
 }
-
 ```
 </details>
 
@@ -3344,7 +3262,7 @@ EV user rates charging service experience: [Example](../../../examples/ev_chargi
 - Request: 
 
 <details>
-<summary><a href="../../../examples/ev_charging/16_on_rating/time-based-ev-charging-slot-on-rating.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/16_on_rating/time-based-ev-charging-slot-on-rating.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -3352,12 +3270,14 @@ EV user rates charging service experience: [Example](../../../examples/ev_chargi
     "version": "2.0.0",
     "action": "on_rating",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bpp_id": "example-bpp.com",
-    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://example-bap.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "89ee20fe-b592-48b0-a5c5-e38f6b90e569",
     "timestamp": "2025-01-27T12:00:30Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2"
   },
   "message": {
     "received": true,
@@ -3368,7 +3288,6 @@ EV user rates charging service experience: [Example](../../../examples/ev_chargi
     }
   }
 }
-
 ```
 </details>
 
@@ -3395,7 +3314,7 @@ CPO accepts rating: [Example](../../../examples/ev_charging/16_on_rating/time-ba
 EV user contacts support: [Example](../../../examples/ev_charging/17_support/time-based-ev-charging-slot-support.json)
 
 <details>
-<summary><a href="../../../examples/ev_charging/17_support/time-based-ev-charging-slot-support.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/17_support/time-based-ev-charging-slot-support.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -3403,19 +3322,20 @@ EV user contacts support: [Example](../../../examples/ev_charging/17_support/tim
     "version": "2.0.0",
     "action": "support",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bap_id": "example-bap.com",
-    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "dee432d9-36c9-4146-ad21-2f5bcac9b6a9",
     "timestamp": "2025-01-27T12:15:00Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2"
   },
   "message": {
     "ref_id": "order-bpp-789012",
     "ref_type": "order"
   }
 }
-
 ```
 </details>
 - Successful Response: 
@@ -3438,7 +3358,7 @@ EV user contacts support: [Example](../../../examples/ev_charging/17_support/tim
 - Request: 
 
 <details>
-<summary><a href="../../../examples/ev_charging/18_on_support/time-based-ev-charging-slot-on-support.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/18_on_support/time-based-ev-charging-slot-on-support.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -3446,12 +3366,14 @@ EV user contacts support: [Example](../../../examples/ev_charging/17_support/tim
     "version": "2.0.0",
     "action": "on_support",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bpp_id": "example-bpp.com",
-    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://example-bap.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "dee432d9-36c9-4146-ad21-2f5bcac9b6a9",
     "timestamp": "2025-01-27T12:15:30Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2"
   },
   "message": {
     "support": {
@@ -3459,7 +3381,7 @@ EV user contacts support: [Example](../../../examples/ev_charging/17_support/tim
       "phone": "18001080",
       "email": "support@bluechargenet-aggregator.io",
       "url": "https://support.bluechargenet-aggregator.io/ticket/SUP-20250730-001",
-      "hours": "Mon–Sun 24/7 IST",
+      "hours": "Mon\u2013Sun 24/7 IST",
       "channels": [
         "PHONE",
         "EMAIL",
@@ -3524,13 +3446,13 @@ Adam taps **Reserve Slot → 12:45–13:15 PM**.
 
 The app displays the **session terms**:
 
-| Term | Example |
-| ----- | ----- |
-| Tariff | ₹18 / kWh |
-| Grace period | 10 min post-session |
-| Idle fee policy | ₹2/min after grace |
+| Term               | Example                  |
+| ------------------ | ------------------------ |
+| Tariff             | ₹18 / kWh                |
+| Grace period       | 10 min post-session      |
+| Idle fee policy    | ₹2/min after grace       |
 | Cancellation rules | Free up to 15 min before |
-| Payment options | Hold, Pre-pay, Post-pay |
+| Payment options    | Hold, Pre-pay, Post-pay  |
 
 They confirm.
 
@@ -3578,7 +3500,7 @@ Consumers can search for EV charging stations with specific criteria including l
 ##### 13.2.1.1.1. Discovery of EV charging services within a circular boundary
 
 <details>
-<summary><a href="../../../examples/ev_charging/01_discover/discovery-within-a-circular-boundary.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/01_discover/discovery-within-a-circular-boundary.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -3588,12 +3510,14 @@ Consumers can search for EV charging stations with specific criteria including l
     "domain": "beckn.one:deg:ev-charging:*",
     "bap_id": "app.example.com",
     "bap_uri": "https://app.example.com/bap",
+    "bpp_id": "example-cds.com",
+    "bpp_uri": "https://example-cds.com/pilot/cds/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "a1eabf26-29f5-4a01-9d4e-4c5c9d1a3d02",
     "timestamp": "2025-10-14T07:31:00Z",
     "ttl": "PT30S",
     "schema_context": [
-      "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingService/v1/context.jsonld"
+      "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingService/v1/context.jsonld"
     ]
   },
   "message": {
@@ -3622,7 +3546,7 @@ Discovery of EV charging services within a circular boundary: [Example](../../..
 ##### 13.2.1.1.2. Discovery of EV charging stations along a route
 
 <details>
-<summary><a href="../../../examples/ev_charging/01_discover/discovery-along-route.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/01_discover/discovery-along-route.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -3632,12 +3556,14 @@ Discovery of EV charging services within a circular boundary: [Example](../../..
     "domain": "beckn.one:deg:ev-charging:*",
     "bap_id": "app.example.com",
     "bap_uri": "https://app.example.com/bap",
+    "bpp_id": "example-cds.com",
+    "bpp_uri": "https://example-cds.com/pilot/cds/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "a1eabf26-29f5-4a01-9d4e-4c5c9d1a3d02",
     "timestamp": "2025-10-14T07:31:00Z",
     "ttl": "PT30S",
     "schema_context": [
-      "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingService/v1/context.jsonld"
+      "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingService/v1/context.jsonld"
     ]
   },
   "message": {
@@ -3850,7 +3776,7 @@ Discovering chargers in a specific circular area, a specific connector type and 
 - Request: 
 
 <details>
-<summary><a href="../../../examples/ev_charging/02_on_discover/time-based-ev-charging-slot-catalog.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/02_on_discover/time-based-ev-charging-slot-catalog.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -3861,9 +3787,11 @@ Discovering chargers in a specific circular area, a specific connector type and 
     "timestamp": "2024-01-15T10:30:05Z",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "a1eabf26-29f5-4a01-9d4e-4c5c9d1a3d02",
-    "bpp_id": "bpp.example.com",
-    "bpp_uri": "https://bpp.example.com",
-    "ttl": "PT30S"
+    "bap_id": "app.example.com",
+    "bap_uri": "https://app.example.com/bap",
+    "ttl": "PT30S",
+    "bpp_id": "example-cds.com",
+    "bpp_uri": "https://example-cds.com/pilot/cds/energy/v2"
   },
   "message": {
     "catalogs": [
@@ -3876,6 +3804,8 @@ Discovering chargers in a specific circular area, a specific connector type and 
           "schema:name": "EV Charging Services Network",
           "beckn:shortDesc": "Comprehensive network of fast charging stations across Bengaluru"
         },
+        "beckn:bppId": "bpp.ev-network.example.com",
+        "beckn:bppUri": "https://bpp.ev-network.example.com/bpp",
         "beckn:validity": {
           "@type": "beckn:TimePeriod",
           "schema:startDate": "2024-10-01T00:00:00Z",
@@ -3941,7 +3871,7 @@ Discovering chargers in a specific circular area, a specific connector type and 
               }
             },
             "beckn:itemAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingService/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingService/v1/context.jsonld",
               "@type": "ChargingService",
               "connectorType": "CCS2",
               "maxPowerKW": 60,
@@ -3966,9 +3896,9 @@ Discovering chargers in a specific circular area, a specific connector type and 
                 }
               },
               "amenityFeature": [
-                "Restaurant",
-                "Restroom",
-                "WiFi"
+                "RESTAURANT",
+                "RESTROOM",
+                "WI-FI"
               ],
               "ocppId": "IN-ECO-BTM-01",
               "evseId": "IN*ECO*BTM*01*CCS2*A",
@@ -4040,7 +3970,7 @@ Discovering chargers in a specific circular area, a specific connector type and 
               }
             },
             "beckn:itemAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingService/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingService/v1/context.jsonld",
               "@type": "ChargingService",
               "connectorType": "CCS2",
               "maxPowerKW": 120,
@@ -4065,10 +3995,10 @@ Discovering chargers in a specific circular area, a specific connector type and 
                 }
               },
               "amenityFeature": [
-                "Restaurant",
-                "Restroom",
-                "WiFi",
-                "Parking"
+                "RESTAURANT",
+                "RESTROOM",
+                "WI-FI",
+                "PARKING"
               ],
               "ocppId": "IN-GC-KOR-01",
               "evseId": "IN*GC*KOR*01*CCS2*A",
@@ -4140,7 +4070,7 @@ Discovering chargers in a specific circular area, a specific connector type and 
               }
             },
             "beckn:itemAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingService/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingService/v1/context.jsonld",
               "@type": "ChargingService",
               "connectorType": "Type2",
               "maxPowerKW": 22,
@@ -4165,9 +4095,9 @@ Discovering chargers in a specific circular area, a specific connector type and 
                 }
               },
               "amenityFeature": [
-                "Restroom",
-                "WiFi",
-                "Parking"
+                "RESTROOM",
+                "WI-FI",
+                "PARKING"
               ],
               "ocppId": "IN-PG-IND-01",
               "evseId": "IN*PG*IND*01*TYPE2*A",
@@ -4213,7 +4143,7 @@ Discovering chargers in a specific circular area, a specific connector type and 
               "WALLET"
             ],
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
@@ -4255,7 +4185,7 @@ Discovering chargers in a specific circular area, a specific connector type and 
               "BANK_TRANSFER"
             ],
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
@@ -4297,7 +4227,7 @@ Discovering chargers in a specific circular area, a specific connector type and 
               "BANK_TRANSFER"
             ],
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
@@ -4312,7 +4242,6 @@ Discovering chargers in a specific circular area, a specific connector type and 
     ]
   }
 }
-
 ```
 </details>
 
@@ -4434,7 +4363,7 @@ Offer schema in the catalog:
 4. **ev:vehicle:** Includes the buyer’s EV details (make/model) to help the provider validate connector compatibility and charging capability.
 
 <details>
-<summary><a href="../../../examples/ev_charging/03_select/time-based-ev-charging-slot-select.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/03_select/time-based-ev-charging-slot-select.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -4445,17 +4374,27 @@ Offer schema in the catalog:
     "timestamp": "2024-01-15T10:30:00Z",
     "message_id": "bb9f86db-9a3d-4e9c-8c11-81c8f1a7b901",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
-    "bap_id": "bap.example.com",
-    "bap_uri": "https://bap.example.com",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
     "ttl": "PT30S"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-ev-charging-001",
       "beckn:orderStatus": "CREATED",
       "beckn:seller": "ecopower-charging",
+      "beckn:buyer": {
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@type": "beckn:Buyer",
+        "beckn:id": "user-123",
+        "beckn:role": "BUYER",
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
+      },
       "beckn:orderValue": {
         "currency": "INR",
         "value": 100.0
@@ -4470,7 +4409,7 @@ Offer schema in the catalog:
             "unitQuantity": 2.5
           },
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-ccs2-60kw-kwh",
             "beckn:descriptor": {
@@ -4480,6 +4419,7 @@ Offer schema in the catalog:
             "beckn:items": [
               "ev-charger-ccs2-001"
             ],
+            "beckn:provider": "ecopower-charging",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -4500,7 +4440,7 @@ Offer schema in the catalog:
               "WALLET"
             ],
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
@@ -4510,15 +4450,7 @@ Offer schema in the catalog:
             }
           }
         }
-      ],
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "buyerFinderFee": {
-          "feeType": "PERCENTAGE",
-          "feeValue": 2.5
-        }
-      }
+      ]
     }
   }
 }
@@ -4561,7 +4493,7 @@ Recommendations for BPP:
 1. on\_select payload MUST have a quotation with detailed breakup for the selected time slot based on the parameters provided by the user in the select request.
 
 <details>
-<summary><a href="../../../examples/ev_charging/04_on_select/time-based-ev-charging-slot-on-select.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/04_on_select/time-based-ev-charging-slot-on-select.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -4572,17 +4504,27 @@ Recommendations for BPP:
     "timestamp": "2024-01-15T10:30:05Z",
     "message_id": "bb9f86db-9a3d-4e9c-8c11-81c8f1a7b901",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
-    "bpp_id": "bpp.example.com",
-    "bpp_uri": "https://bpp.example.com",
-    "ttl": "PT30S"
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://example-bap.com/pilot/bap/energy/v2",
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-ev-charging-001",
       "beckn:orderStatus": "PENDING",
       "beckn:seller": "ecopower-charging",
+      "beckn:buyer": {
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@type": "beckn:Buyer",
+        "beckn:id": "user-123",
+        "beckn:role": "BUYER",
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
+      },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
@@ -4593,7 +4535,7 @@ Recommendations for BPP:
             "unitQuantity": 2.5
           },
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-ccs2-60kw-kwh",
             "beckn:descriptor": {
@@ -4603,6 +4545,7 @@ Recommendations for BPP:
             "beckn:items": [
               "ev-charger-ccs2-001"
             ],
+            "beckn:provider": "ecopower-charging",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -4623,7 +4566,7 @@ Recommendations for BPP:
               "WALLET"
             ],
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
@@ -4680,7 +4623,7 @@ Recommendations for BPP:
         ]
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -4698,12 +4641,12 @@ Recommendations for BPP:
         "beckn:paymentStatus": "PENDING"
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-charging-001",
         "beckn:mode": "RESERVATION",
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "sessionStatus": "PENDING",
           "authorizationMode": "APP_QR",
@@ -4720,7 +4663,6 @@ Recommendations for BPP:
     }
   }
 }
-
 ```
 </details>
 
@@ -4832,7 +4774,7 @@ Recommendations for BAP:
 1. init payload MUST contain the billing details of the user in addition to the details which were part of the select request.
 
 <details>
-<summary><a href="../../../examples/ev_charging/05_init/time-based-ev-charging-slot-init.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/05_init/time-based-ev-charging-slot-init.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -4840,48 +4782,47 @@ Recommendations for BAP:
     "version": "2.0.0",
     "action": "init",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bap_id": "example-bap.com",
-    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "6743e9e2-4fb5-487c-92b7-13ba8018f176",
     "timestamp": "2025-01-27T10:00:00Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-123456",
       "beckn:orderStatus": "PENDING",
       "beckn:seller": "cpo1.com",
       "beckn:buyer": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Buyer",
         "beckn:id": "user-123",
         "beckn:role": "BUYER",
-        "beckn:name": "Ravi Kumar",
-        "beckn:organization": {
-          "descriptor": {
-            "name": "GreenCharge Pvt Ltd"
-          }
-        },
-        "beckn:address": "Apartment 123, MG Road, Bengaluru, Karnataka, 560001, India",
-        "beckn:email": "ravi.kumar@greencharge.com",
-        "beckn:phone": "+918765432100",
-        "beckn:taxId": "GSTIN29ABCDE1234F1Z5"
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
       },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
           "beckn:orderedItem": "pe-charging-01",
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-001",
             "beckn:descriptor": {
+              "@type": "beckn:Descriptor",
               "name": "EV Charging Session Offer",
               "short_desc": "Fast charging session with CCS2 connector"
             },
+            "beckn:items": [
+              "pe-charging-01"
+            ],
+            "beckn:provider": "cpo1.com",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -4897,14 +4838,12 @@ Recommendations for BAP:
               "schema:endDate": "2025-04-27T23:59:59Z"
             },
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
-              "offerType": "CHARGING_SESSION",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
                 "feeValue": 2.0
-              },
-              "discountPercentage": 20.0
+              }
             }
           },
           "beckn:quantity": {
@@ -4960,7 +4899,7 @@ Recommendations for BAP:
         ]
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -4978,12 +4917,12 @@ Recommendations for BAP:
         "beckn:paymentStatus": "INITIATED"
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "sessionStatus": "PENDING",
           "connectorType": "CCS2",
@@ -4991,24 +4930,10 @@ Recommendations for BAP:
           "vehicleMake": "Tata",
           "vehicleModel": "Nexon EV"
         }
-      },
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "sessionPreferences": {
-          "preferredStartTime": "2025-01-27T10:00:00Z",
-          "preferredEndTime": "2025-01-27T11:30:00Z",
-          "notificationPreferences": {
-            "email": true,
-            "sms": true,
-            "push": false
-          }
-        }
       }
     }
   }
 }
-
 ```
 </details>
 
@@ -5051,7 +4976,7 @@ Recommendations for BAP:
 
 
 <details>
-<summary><a href="../../../examples/ev_charging/06_on_init/time-based-ev-charging-slot-on-init.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/06_on_init/time-based-ev-charging-slot-on-init.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -5059,49 +4984,48 @@ Recommendations for BAP:
     "version": "2.0.0",
     "action": "on_init",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bpp_id": "example-bpp.com",
-    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://example-bap.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "6743e9e2-4fb5-487c-92b7-13ba8018f176",
     "timestamp": "2025-01-27T10:00:00Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-123456",
       "beckn:orderStatus": "PENDING",
       "beckn:orderNumber": "ORD-2025-001",
       "beckn:seller": "cpo1.com",
       "beckn:buyer": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Buyer",
         "beckn:id": "user-123",
         "beckn:role": "BUYER",
-        "beckn:name": "Ravi Kumar",
-        "beckn:organization": {
-          "descriptor": {
-            "name": "GreenCharge Pvt Ltd"
-          }
-        },
-        "beckn:address": "Apartment 123, MG Road, Bengaluru, Karnataka, 560001, India",
-        "beckn:email": "ravi.kumar@greencharge.com",
-        "beckn:phone": "+918765432100",
-        "beckn:taxId": "GSTIN29ABCDE1234F1Z5"
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
       },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
           "beckn:orderedItem": "pe-charging-01",
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-001",
             "beckn:descriptor": {
+              "@type": "beckn:Descriptor",
               "name": "EV Charging Session Offer",
               "short_desc": "Fast charging session with CCS2 connector"
             },
+            "beckn:items": [
+              "pe-charging-01"
+            ],
+            "beckn:provider": "cpo1.com",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -5117,14 +5041,12 @@ Recommendations for BAP:
               "schema:endDate": "2025-04-27T23:59:59Z"
             },
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
-              "offerType": "CHARGING_SESSION",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
                 "feeValue": 2.0
-              },
-              "discountPercentage": 20.0
+              }
             }
           },
           "beckn:quantity": {
@@ -5180,25 +5102,23 @@ Recommendations for BAP:
         ]
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "connectorType": "CCS2",
           "maxPowerKW": 50,
-          "authorization": {
-            "type": "OTP"
-          },
+          "authorizationMode": "OTP",
           "vehicleMake": "Tata",
           "vehicleModel": "Nexon EV",
           "sessionStatus": "PENDING"
         }
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -5214,25 +5134,10 @@ Recommendations for BAP:
           "WALLET"
         ],
         "beckn:paymentStatus": "INITIATED"
-      },
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "sessionPreferences": {
-          "preferredStartTime": "2025-01-27T10:00:00Z",
-          "preferredEndTime": "2025-01-27T11:30:00Z",
-          "notificationPreferences": {
-            "email": true,
-            "sms": true,
-            "push": false
-          }
-        },
-        "sessionStatus": "PENDING"
       }
     }
   }
 }
-
 ```
 </details>
 
@@ -5333,7 +5238,7 @@ Recommendations for BAP:
 
 
 <details>
-<summary><a href="../../../examples/ev_charging/07_confirm/time-based-ev-charging-slot-confirm.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/07_confirm/time-based-ev-charging-slot-confirm.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -5341,49 +5246,48 @@ Recommendations for BAP:
     "version": "2.0.0",
     "action": "confirm",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bap_id": "example-bap.com",
-    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "c69b4c1e-fb7e-469d-ae90-00f4d5e82b64",
     "timestamp": "2025-01-27T10:05:00Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-123456",
       "beckn:orderStatus": "PENDING",
       "beckn:orderNumber": "ORD-2025-001",
       "beckn:seller": "cpo1.com",
       "beckn:buyer": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Buyer",
         "beckn:id": "user-123",
         "beckn:role": "BUYER",
-        "beckn:name": "Ravi Kumar",
-        "beckn:organization": {
-          "descriptor": {
-            "name": "GreenCharge Pvt Ltd"
-          }
-        },
-        "beckn:address": "Apartment 123, MG Road, Bengaluru, Karnataka, 560001, India",
-        "beckn:email": "ravi.kumar@greencharge.com",
-        "beckn:phone": "+918765432100",
-        "beckn:taxId": "GSTIN29ABCDE1234F1Z5"
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
       },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
           "beckn:orderedItem": "pe-charging-01",
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-001",
             "beckn:descriptor": {
+              "@type": "beckn:Descriptor",
               "name": "EV Charging Session Offer",
               "short_desc": "Fast charging session with CCS2 connector"
             },
+            "beckn:items": [
+              "pe-charging-01"
+            ],
+            "beckn:provider": "cpo1.com",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -5399,14 +5303,12 @@ Recommendations for BAP:
               "schema:endDate": "2025-04-27T23:59:59Z"
             },
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
-              "offerType": "CHARGING_SESSION",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
                 "feeValue": 2.0
-              },
-              "discountPercentage": 20.0
+              }
             }
           },
           "beckn:quantity": {
@@ -5462,22 +5364,24 @@ Recommendations for BAP:
         ]
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "connectorType": "CCS2",
           "maxPowerKW": 50,
+          "authorizationMode": "OTP",
+          "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order",
           "vehicleMake": "Tata",
           "vehicleModel": "Nexon EV",
           "sessionStatus": "PENDING"
         }
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -5493,27 +5397,10 @@ Recommendations for BAP:
           "WALLET"
         ],
         "beckn:paymentStatus": "COMPLETED"
-      },
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "sessionPreferences": {
-          "preferredStartTime": "2025-01-27T10:00:00Z",
-          "preferredEndTime": "2025-01-27T11:30:00Z",
-          "notificationPreferences": {
-            "email": true,
-            "sms": true,
-            "push": false
-          }
-        },
-        "authorizationMode": "OTP",
-        "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order",
-        "sessionStatus": "PENDING"
       }
     }
   }
 }
-
 ```
 </details>
 
@@ -5549,7 +5436,7 @@ Recommendations for BAP:
   2. These details are in addition to the details which were part of the on\_init payload.
 
 <details>
-<summary><a href="../../../examples/ev_charging/08_on_confirm/time-based-ev-charging-slot-on-confirm.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/08_on_confirm/time-based-ev-charging-slot-on-confirm.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -5557,49 +5444,48 @@ Recommendations for BAP:
     "version": "2.0.0",
     "action": "on_confirm",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bpp_id": "example-bpp.com",
-    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://example-bap.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "c69b4c1e-fb7e-469d-ae90-00f4d5e82b64",
     "timestamp": "2025-01-27T10:05:00Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-bpp-789012",
       "beckn:orderStatus": "CONFIRMED",
       "beckn:orderNumber": "ORD-2025-001",
       "beckn:seller": "cpo1.com",
       "beckn:buyer": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Buyer",
         "beckn:id": "user-123",
         "beckn:role": "BUYER",
-        "beckn:name": "Ravi Kumar",
-        "beckn:organization": {
-          "descriptor": {
-            "name": "GreenCharge Pvt Ltd"
-          }
-        },
-        "beckn:address": "Apartment 123, MG Road, Bengaluru, Karnataka, 560001, India",
-        "beckn:email": "ravi.kumar@greencharge.com",
-        "beckn:phone": "+918765432100",
-        "beckn:taxId": "GSTIN29ABCDE1234F1Z5"
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
       },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
           "beckn:orderedItem": "pe-charging-01",
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-001",
             "beckn:descriptor": {
+              "@type": "beckn:Descriptor",
               "name": "EV Charging Session Offer",
               "short_desc": "Fast charging session with CCS2 connector"
             },
+            "beckn:items": [
+              "pe-charging-01"
+            ],
+            "beckn:provider": "cpo1.com",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -5615,14 +5501,12 @@ Recommendations for BAP:
               "schema:endDate": "2025-04-27T23:59:59Z"
             },
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
-              "offerType": "CHARGING_SESSION",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
                 "feeValue": 2.0
-              },
-              "discountPercentage": 20.0
+              }
             }
           },
           "beckn:quantity": {
@@ -5678,22 +5562,24 @@ Recommendations for BAP:
         ]
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "connectorType": "CCS2",
           "maxPowerKW": 50,
+          "authorizationMode": "OTP",
+          "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order",
           "vehicleMake": "Tata",
           "vehicleModel": "Nexon EV",
           "sessionStatus": "PENDING"
         }
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -5710,27 +5596,10 @@ Recommendations for BAP:
           "WALLET"
         ],
         "beckn:paymentStatus": "COMPLETED"
-      },
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "sessionPreferences": {
-          "preferredStartTime": "2025-01-27T10:00:00Z",
-          "preferredEndTime": "2025-01-27T11:30:00Z",
-          "notificationPreferences": {
-            "email": true,
-            "sms": true,
-            "push": false
-          }
-        },
-        "authorizationMode": "OTP",
-        "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order",
-        "sessionStatus": "PENDING"
       }
     }
   }
 }
-
 ```
 </details>
 
@@ -5776,7 +5645,7 @@ Once these physical steps are completed, the charging session can be initiated t
   * **beckn:purpose:** Human-readable explanation of why this authorization is needed — in this case, to verify the user at the EV station before starting the session.
 
 <details>
-<summary><a href="../../../examples/ev_charging/09_update/ev-charging-session-start-update.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/09_update/ev-charging-session-start-update.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -5786,6 +5655,8 @@ Once these physical steps are completed, the charging session can be initiated t
     "domain": "beckn.one:deg:ev-charging:*",
     "bap_id": "example-bap.com",
     "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "6bd7be5b-ac21-4a5c-a787-5ec6980317e6",
     "timestamp": "2025-01-27T10:15:00Z",
@@ -5793,40 +5664,37 @@ Once these physical steps are completed, the charging session can be initiated t
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-bpp-789012",
       "beckn:orderStatus": "INPROGRESS",
       "beckn:orderNumber": "ORD-2025-001",
       "beckn:seller": "cpo1.com",
       "beckn:buyer": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Buyer",
         "beckn:id": "user-123",
         "beckn:role": "BUYER",
-        "beckn:name": "Ravi Kumar",
-        "beckn:organization": {
-          "descriptor": {
-            "name": "GreenCharge Pvt Ltd"
-          }
-        },
-        "beckn:address": "Apartment 123, MG Road, Bengaluru, Karnataka, 560001, India",
-        "beckn:email": "ravi.kumar@greencharge.com",
-        "beckn:phone": "+918765432100",
-        "beckn:taxId": "GSTIN29ABCDE1234F1Z5"
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
       },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
           "beckn:orderedItem": "pe-charging-01",
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-001",
             "beckn:descriptor": {
+              "@type": "beckn:Descriptor",
               "name": "EV Charging Session Offer",
               "short_desc": "Fast charging session with CCS2 connector"
             },
+            "beckn:items": [
+              "pe-charging-01"
+            ],
+            "beckn:provider": "cpo1.com",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -5842,14 +5710,12 @@ Once these physical steps are completed, the charging session can be initiated t
               "schema:endDate": "2025-04-27T23:59:59Z"
             },
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
-              "offerType": "CHARGING_SESSION",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
                 "feeValue": 2.0
-              },
-              "discountPercentage": 20.0
+              }
             }
           },
           "beckn:quantity": {
@@ -5905,23 +5771,24 @@ Once these physical steps are completed, the charging session can be initiated t
         ]
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "sessionStatus": "PENDING",
           "connectorType": "CCS2",
           "maxPowerKW": 50,
           "authorizationMode": "OTP",
+          "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order",
           "vehicleMake": "Tata",
           "vehicleModel": "Nexon EV"
         }
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -5938,26 +5805,10 @@ Once these physical steps are completed, the charging session can be initiated t
           "WALLET"
         ],
         "beckn:paymentStatus": "COMPLETED"
-      },
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "sessionPreferences": {
-          "preferredStartTime": "2025-01-27T10:00:00Z",
-          "preferredEndTime": "2025-01-27T11:30:00Z",
-          "notificationPreferences": {
-            "email": true,
-            "sms": true,
-            "push": false
-          }
-        },
-        "authorizationMode": "OTP",
-        "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order"
       }
     }
   }
 }
-
 ```
 </details>
 - Successful Response: 
@@ -5985,7 +5836,7 @@ Once these physical steps are completed, the charging session can be initiated t
   2. **ev:code:** "CHARGING-ACTIVE" — a standardized machine-readable code that BAPs can use to update the user interface, start timers, or calculate live charging duration.
 
 <details>
-<summary><a href="../../../examples/ev_charging/10_on_update/time-based-ev-charging-slot-on-update.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/10_on_update/time-based-ev-charging-slot-on-update.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -5993,49 +5844,48 @@ Once these physical steps are completed, the charging session can be initiated t
     "version": "2.0.0",
     "action": "on_update",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bpp_id": "example-bpp.com",
-    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://example-bap.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "6bd7be5b-ac21-4a5c-a787-5ec6980317e6",
     "timestamp": "2025-01-27T10:15:30Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-bpp-789012",
       "beckn:orderStatus": "INPROGRESS",
       "beckn:orderNumber": "ORD-2025-001",
       "beckn:seller": "cpo1.com",
       "beckn:buyer": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Buyer",
         "beckn:id": "user-123",
         "beckn:role": "BUYER",
-        "beckn:name": "Ravi Kumar",
-        "beckn:organization": {
-          "descriptor": {
-            "name": "GreenCharge Pvt Ltd"
-          }
-        },
-        "beckn:address": "Apartment 123, MG Road, Bengaluru, Karnataka, 560001, India",
-        "beckn:email": "ravi.kumar@greencharge.com",
-        "beckn:phone": "+918765432100",
-        "beckn:taxId": "GSTIN29ABCDE1234F1Z5"
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
       },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
           "beckn:orderedItem": "pe-charging-01",
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-001",
             "beckn:descriptor": {
+              "@type": "beckn:Descriptor",
               "name": "EV Charging Session Offer",
               "short_desc": "Fast charging session with CCS2 connector"
             },
+            "beckn:items": [
+              "pe-charging-01"
+            ],
+            "beckn:provider": "cpo1.com",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -6051,14 +5901,12 @@ Once these physical steps are completed, the charging session can be initiated t
               "schema:endDate": "2025-04-27T23:59:59Z"
             },
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
-              "offerType": "CHARGING_SESSION",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
                 "feeValue": 2.0
-              },
-              "discountPercentage": 20.0
+              }
             }
           },
           "beckn:quantity": {
@@ -6114,23 +5962,24 @@ Once these physical steps are completed, the charging session can be initiated t
         ]
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "sessionStatus": "ACTIVE",
           "connectorType": "CCS2",
           "maxPowerKW": 50,
           "authorizationMode": "OTP",
+          "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order",
           "vehicleMake": "Tata",
           "vehicleModel": "Nexon EV"
         }
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -6147,26 +5996,10 @@ Once these physical steps are completed, the charging session can be initiated t
           "WALLET"
         ],
         "beckn:paymentStatus": "COMPLETED"
-      },
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "sessionPreferences": {
-          "preferredStartTime": "2025-01-27T10:00:00Z",
-          "preferredEndTime": "2025-01-27T11:30:00Z",
-          "notificationPreferences": {
-            "email": true,
-            "sms": true,
-            "push": false
-          }
-        },
-        "authorizationMode": "OTP",
-        "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order"
       }
     }
   }
 }
-
 ```
 </details>
 
@@ -6196,7 +6029,7 @@ Once these physical steps are completed, the charging session can be initiated t
   2. **beckn:track-fulfillment:** Boolean flag indicating whether live fulfillment tracking is enabled (true means the BPP should send periodic state updates to the callback URL).
 
 <details>
-<summary><a href="../../../examples/ev_charging/11_track/time-based-ev-charging-slot-track.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/11_track/time-based-ev-charging-slot-track.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -6206,6 +6039,8 @@ Once these physical steps are completed, the charging session can be initiated t
     "domain": "beckn.one:deg:ev-charging:*",
     "bap_id": "example-bap.com",
     "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "6ace310b-6440-4421-a2ed-b484c7548bd5",
     "timestamp": "2025-01-27T17:00:40.065Z",
@@ -6213,10 +6048,27 @@ Once these physical steps are completed, the charging session can be initiated t
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-bpp-789012",
-      "beckn:orderStatus": "INPROGRESS"
+      "beckn:orderStatus": "INPROGRESS",
+      "beckn:seller": "cpo1.com",
+      "beckn:buyer": {
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
+        "@type": "beckn:Buyer",
+        "beckn:id": "user-123"
+      },
+      "beckn:orderItems": [
+        {
+          "beckn:lineId": "line-001",
+          "beckn:orderedItem": "pe-charging-01",
+          "beckn:quantity": {
+            "unitText": "Kilowatt Hour",
+            "unitCode": "KWH",
+            "unitQuantity": 1
+          }
+        }
+      ]
     }
   }
 }
@@ -6263,7 +6115,7 @@ Once these physical steps are completed, the charging session can be initiated t
   Timestamp showing when these readings were last recorded or pushed — helps synchronize live dashboards or notifications on the BAP side.
 
 <details>
-<summary><a href="../../../examples/ev_charging/12_on_track/time-based-ev-charging-slot-on-track.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/12_on_track/time-based-ev-charging-slot-on-track.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -6271,27 +6123,40 @@ Once these physical steps are completed, the charging session can be initiated t
     "version": "2.0.0",
     "action": "on_track",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bpp_id": "example-bpp.com",
-    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://example-bap.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "6ace310b-6440-4421-a2ed-b484c7548bd5",
     "timestamp": "2025-01-27T17:00:40.065Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-bpp-789012",
       "beckn:orderStatus": "INPROGRESS",
+      "beckn:seller": "cpo1.com",
+      "beckn:buyer": {
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
+        "@type": "beckn:Buyer",
+        "beckn:id": "user-123"
+      },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
-          "beckn:orderedItem": "pe-charging-01"
+          "beckn:orderedItem": "pe-charging-01",
+          "beckn:quantity": {
+            "unitText": "Kilowatt Hour",
+            "unitCode": "KWH",
+            "unitQuantity": 1
+          }
         }
       ],
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
@@ -6304,28 +6169,68 @@ Once these physical steps are completed, the charging session can be initiated t
           "deliveryMethod": "RESERVATION",
           "reservationId": "TRACK-SESSION-9876543210"
         },
-        "deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingService/v1/context.jsonld",
+        "beckn:deliveryAttributes": {
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingService/v1/context.jsonld",
           "@type": "ChargingSession",
           "chargingTelemetry": [
             {
               "eventTime": "2025-01-27T17:00:00Z",
               "metrics": [
-                { "name": "STATE_OF_CHARGE", "value": 62.5, "unitCode": "PERCENTAGE" },
-                { "name": "POWER", "value": 18.4, "unitCode": "KWH" },
-                { "name": "ENERGY", "value": 10.2, "unitCode": "KW" },
-                { "name": "VOLTAGE", "value": 392, "unitCode": "VLT" },
-                { "name": "CURRENT", "value": 47.0, "unitCode": "AMP" }
+                {
+                  "name": "STATE_OF_CHARGE",
+                  "value": 62.5,
+                  "unitCode": "PERCENTAGE"
+                },
+                {
+                  "name": "POWER",
+                  "value": 18.4,
+                  "unitCode": "KWH"
+                },
+                {
+                  "name": "ENERGY",
+                  "value": 10.2,
+                  "unitCode": "KW"
+                },
+                {
+                  "name": "VOLTAGE",
+                  "value": 392,
+                  "unitCode": "VLT"
+                },
+                {
+                  "name": "CURRENT",
+                  "value": 47.0,
+                  "unitCode": "AMP"
+                }
               ]
             },
             {
               "eventTime": "2025-01-27T17:05:00Z",
               "metrics": [
-                { "name": "STATE_OF_CHARGE", "value": 65.0, "unitCode": "PERCENTAGE" },
-                { "name": "POWER", "value": 17.1, "unitCode": "KWH" },
-                { "name": "ENERGY", "value": 11.1, "unitCode": "KW" },
-                { "name": "VOLTAGE", "value": 388, "unitCode": "VLT" },
-                { "name": "CURRENT", "value": 44.2, "unitCode": "AMP" }
+                {
+                  "name": "STATE_OF_CHARGE",
+                  "value": 65.0,
+                  "unitCode": "PERCENTAGE"
+                },
+                {
+                  "name": "POWER",
+                  "value": 17.1,
+                  "unitCode": "KWH"
+                },
+                {
+                  "name": "ENERGY",
+                  "value": 11.1,
+                  "unitCode": "KW"
+                },
+                {
+                  "name": "VOLTAGE",
+                  "value": 388,
+                  "unitCode": "VLT"
+                },
+                {
+                  "name": "CURRENT",
+                  "value": 44.2,
+                  "unitCode": "AMP"
+                }
               ]
             }
           ]
@@ -6334,7 +6239,6 @@ Once these physical steps are completed, the charging session can be initiated t
     }
   }
 }
-
 ```
 </details>
 
@@ -6424,7 +6328,7 @@ API Implementation: The above under and overcharge scenarios are supported throu
 - Request: EV user reveives details in case of any error during a charging session: [Example](../../../examples/ev_charging/13_on_status/time-based-ev-charging-slot-on-status.json)
 
 <details>
-<summary><a href="../../../examples/ev_charging/13_on_status/time-based-ev-charging-slot-on-status.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/13_on_status/time-based-ev-charging-slot-on-status.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -6432,49 +6336,48 @@ API Implementation: The above under and overcharge scenarios are supported throu
     "version": "2.0.0",
     "action": "on_status",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bpp_id": "example-bpp.com",
-    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://example-bap.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "6743e9e2-4fb5-487c-92b7-13ba8018f176",
     "timestamp": "2025-01-27T13:07:02Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-bpp-789012",
       "beckn:orderStatus": "INPROGRESS",
       "beckn:orderNumber": "ORD-2025-001",
       "beckn:seller": "cpo1.com",
       "beckn:buyer": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Buyer",
         "beckn:id": "user-123",
         "beckn:role": "BUYER",
-        "beckn:name": "Ravi Kumar",
-        "beckn:organization": {
-          "descriptor": {
-            "name": "GreenCharge Pvt Ltd"
-          }
-        },
-        "beckn:address": "Apartment 123, MG Road, Bengaluru, Karnataka, 560001, India",
-        "beckn:email": "ravi.kumar@greencharge.com",
-        "beckn:phone": "+918765432100",
-        "beckn:taxId": "GSTIN29ABCDE1234F1Z5"
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
       },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
           "beckn:orderedItem": "pe-charging-01",
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-001",
             "beckn:descriptor": {
+              "@type": "beckn:Descriptor",
               "name": "EV Charging Session Offer",
               "short_desc": "Fast charging session with CCS2 connector"
             },
+            "beckn:items": [
+              "pe-charging-01"
+            ],
+            "beckn:provider": "cpo1.com",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -6490,14 +6393,12 @@ API Implementation: The above under and overcharge scenarios are supported throu
               "schema:endDate": "2025-04-27T23:59:59Z"
             },
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
-              "offerType": "CHARGING_SESSION",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
                 "feeValue": 2.0
-              },
-              "discountPercentage": 20.0
+              }
             }
           },
           "beckn:quantity": {
@@ -6553,7 +6454,7 @@ API Implementation: The above under and overcharge scenarios are supported throu
         ]
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
@@ -6567,18 +6468,19 @@ API Implementation: The above under and overcharge scenarios are supported throu
           "reservationId": "TRACK-SESSION-9876543210"
         },
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "sessionStatus": "INTERRUPTED",
           "connectorType": "CCS2",
           "maxPowerKW": 50,
           "authorizationMode": "OTP",
+          "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order",
           "vehicleMake": "Tata",
           "vehicleModel": "Nexon EV"
         }
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -6595,26 +6497,10 @@ API Implementation: The above under and overcharge scenarios are supported throu
           "WALLET"
         ],
         "beckn:paymentStatus": "COMPLETED"
-      },
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "sessionPreferences": {
-          "preferredStartTime": "2025-01-27T10:00:00Z",
-          "preferredEndTime": "2025-01-27T11:30:00Z",
-          "notificationPreferences": {
-            "email": true,
-            "sms": true,
-            "push": false
-          }
-        },
-        "authorizationMode": "OTP",
-        "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order"
       }
     }
   }
 }
-
 ```
 </details>
 - Successful Response: 
@@ -6645,7 +6531,7 @@ API Implementation: The above under and overcharge scenarios are supported throu
     Includes transaction identifiers, timestamps, payment provider, and invoice reference for settlement and customer records.
 
 <details>
-<summary><a href="../../../examples/ev_charging/09_update/ev-charging-session-end-update.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/09_update/ev-charging-session-end-update.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -6653,49 +6539,48 @@ API Implementation: The above under and overcharge scenarios are supported throu
     "version": "2.0.0",
     "action": "update",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bap_id": "example-bap.com",
-    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "6bd7be5b-ac21-4a5c-a787-5ec6980317e6",
     "timestamp": "2025-01-27T10:15:00Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-bpp-789012",
       "beckn:orderStatus": "INPROGRESS",
       "beckn:orderNumber": "ORD-2025-001",
       "beckn:seller": "cpo1.com",
       "beckn:buyer": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Buyer",
         "beckn:id": "user-123",
         "beckn:role": "BUYER",
-        "beckn:name": "Ravi Kumar",
-        "beckn:organization": {
-          "descriptor": {
-            "name": "GreenCharge Pvt Ltd"
-          }
-        },
-        "beckn:address": "Apartment 123, MG Road, Bengaluru, Karnataka, 560001, India",
-        "beckn:email": "ravi.kumar@greencharge.com",
-        "beckn:phone": "+918765432100",
-        "beckn:taxId": "GSTIN29ABCDE1234F1Z5"
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
       },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
           "beckn:orderedItem": "pe-charging-01",
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-001",
             "beckn:descriptor": {
+              "@type": "beckn:Descriptor",
               "name": "EV Charging Session Offer",
               "short_desc": "Fast charging session with CCS2 connector"
             },
+            "beckn:items": [
+              "pe-charging-01"
+            ],
+            "beckn:provider": "cpo1.com",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -6711,14 +6596,12 @@ API Implementation: The above under and overcharge scenarios are supported throu
               "schema:endDate": "2025-04-27T23:59:59Z"
             },
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
-              "offerType": "CHARGING_SESSION",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
                 "feeValue": 2.0
-              },
-              "discountPercentage": 20.0
+              }
             }
           },
           "beckn:quantity": {
@@ -6774,23 +6657,24 @@ API Implementation: The above under and overcharge scenarios are supported throu
         ]
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "sessionStatus": "COMPLETED",
           "connectorType": "CCS2",
           "maxPowerKW": 50,
           "authorizationMode": "OTP",
+          "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order",
           "vehicleMake": "Tata",
           "vehicleModel": "Nexon EV"
         }
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -6807,26 +6691,10 @@ API Implementation: The above under and overcharge scenarios are supported throu
           "WALLET"
         ],
         "beckn:paymentStatus": "COMPLETED"
-      },
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "sessionPreferences": {
-          "preferredStartTime": "2025-01-27T10:00:00Z",
-          "preferredEndTime": "2025-01-27T11:30:00Z",
-          "notificationPreferences": {
-            "email": true,
-            "sms": true,
-            "push": false
-          }
-        },
-        "authorizationMode": "OTP",
-        "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order"
       }
     }
   }
 }
-
 ```
 </details>
 
@@ -6840,7 +6708,7 @@ API Implementation: The above under and overcharge scenarios are supported throu
 - Request:
 
 <details>
-<summary><a href="../../../examples/ev_charging/14_on_update/time-based-ev-charging-slot-on-update.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/14_on_update/time-based-ev-charging-slot-on-update.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -6848,49 +6716,48 @@ API Implementation: The above under and overcharge scenarios are supported throu
     "version": "2.0.0",
     "action": "on_update",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bpp_id": "example-bpp.com",
-    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://example-bap.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "32f67afe-3d8c-4faa-bc2e-93b0791dcb02",
     "timestamp": "2025-01-27T11:45:00Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2"
   },
   "message": {
     "order": {
-      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+      "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
       "@type": "beckn:Order",
       "beckn:id": "order-bpp-789012",
       "beckn:orderStatus": "COMPLETED",
       "beckn:orderNumber": "ORD-2025-001",
       "beckn:seller": "cpo1.com",
       "beckn:buyer": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Buyer",
         "beckn:id": "user-123",
         "beckn:role": "BUYER",
-        "beckn:name": "Ravi Kumar",
-        "beckn:organization": {
-          "descriptor": {
-            "name": "GreenCharge Pvt Ltd"
-          }
-        },
-        "beckn:address": "Apartment 123, MG Road, Bengaluru, Karnataka, 560001, India",
-        "beckn:email": "ravi.kumar@greencharge.com",
-        "beckn:phone": "+918765432100",
-        "beckn:taxId": "GSTIN29ABCDE1234F1Z5"
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
       },
       "beckn:orderItems": [
         {
           "beckn:lineId": "line-001",
           "beckn:orderedItem": "pe-charging-01",
           "beckn:acceptedOffer": {
-            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+            "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
             "@type": "beckn:Offer",
             "beckn:id": "offer-001",
             "beckn:descriptor": {
+              "@type": "beckn:Descriptor",
               "name": "EV Charging Session Offer",
               "short_desc": "Fast charging session with CCS2 connector"
             },
+            "beckn:items": [
+              "pe-charging-01"
+            ],
+            "beckn:provider": "cpo1.com",
             "beckn:price": {
               "currency": "INR",
               "value": 18.0,
@@ -6906,14 +6773,12 @@ API Implementation: The above under and overcharge scenarios are supported throu
               "schema:endDate": "2025-04-27T23:59:59Z"
             },
             "beckn:offerAttributes": {
-              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingOffer/v1/context.jsonld",
+              "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld",
               "@type": "ChargingOffer",
-              "offerType": "CHARGING_SESSION",
               "buyerFinderFee": {
                 "feeType": "PERCENTAGE",
                 "feeValue": 2.0
-              },
-              "discountPercentage": 20.0
+              }
             }
           },
           "beckn:quantity": {
@@ -6969,7 +6834,7 @@ API Implementation: The above under and overcharge scenarios are supported throu
         ]
       },
       "beckn:fulfillment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Fulfillment",
         "beckn:id": "fulfillment-001",
         "beckn:mode": "RESERVATION",
@@ -6983,18 +6848,19 @@ API Implementation: The above under and overcharge scenarios are supported throu
           "reservationId": "TRACK-SESSION-9876543210"
         },
         "beckn:deliveryAttributes": {
-          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
+          "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld",
           "@type": "ChargingSession",
           "sessionStatus": "COMPLETED",
           "connectorType": "CCS2",
           "maxPowerKW": 50,
           "authorizationMode": "OTP",
+          "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order",
           "vehicleMake": "Tata",
           "vehicleModel": "Nexon EV"
         }
       },
       "beckn:payment": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld",
+        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld",
         "@type": "beckn:Payment",
         "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
         "beckn:amount": {
@@ -7011,26 +6877,10 @@ API Implementation: The above under and overcharge scenarios are supported throu
           "WALLET"
         ],
         "beckn:paymentStatus": "COMPLETED"
-      },
-      "beckn:orderAttributes": {
-        "@context": "https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/EvChargingSession/v1/context.jsonld",
-        "@type": "ChargingSession",
-        "sessionPreferences": {
-          "preferredStartTime": "2025-01-27T10:00:00Z",
-          "preferredEndTime": "2025-01-27T11:30:00Z",
-          "notificationPreferences": {
-            "email": true,
-            "sms": true,
-            "push": false
-          }
-        },
-        "authorizationMode": "OTP",
-        "authorizationOtpHint": "OTP will be shared to the user's registered number to confirm order"
       }
     }
   }
 }
-
 ```
 </details>
 
@@ -7047,7 +6897,7 @@ API Implementation: The above under and overcharge scenarios are supported throu
 ```
 </details>
 
-#### 13.2.1.17. `atcion: cancel`
+#### 13.2.1.17. `action: cancel`
 
 It’s like when a client calls to cancel an appointment — maybe something came up, or their plans have changed. When they request to cancel, it’s about freeing up that slot and keeping things organized.
 
@@ -7197,7 +7047,7 @@ This API is **NOT** to be used to cancel an ongoing session. To cancel an ongoin
 - Request: CPO accepts rating: [Example](../../../examples/ev_charging/16_on_rating/time-based-ev-charging-slot-on-rating.json)
 
 <details>
-<summary><a href="../../../examples/ev_charging/16_on_rating/time-based-ev-charging-slot-on-rating.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/16_on_rating/time-based-ev-charging-slot-on-rating.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -7205,12 +7055,14 @@ This API is **NOT** to be used to cancel an ongoing session. To cancel an ongoin
     "version": "2.0.0",
     "action": "on_rating",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bpp_id": "example-bpp.com",
-    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://example-bap.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "89ee20fe-b592-48b0-a5c5-e38f6b90e569",
     "timestamp": "2025-01-27T12:00:30Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2"
   },
   "message": {
     "received": true,
@@ -7221,7 +7073,6 @@ This API is **NOT** to be used to cancel an ongoing session. To cancel an ongoin
     }
   }
 }
-
 ```
 </details>
 
@@ -7245,7 +7096,7 @@ This API is **NOT** to be used to cancel an ongoing session. To cancel an ongoin
 - Request: EV user contacts support: [Example](../../../examples/ev_charging/17_support/time-based-ev-charging-slot-support.json)
 
 <details>
-<summary><a href="../../../examples/ev_charging/17_support/time-based-ev-charging-slot-support.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/17_support/time-based-ev-charging-slot-support.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -7253,19 +7104,20 @@ This API is **NOT** to be used to cancel an ongoing session. To cancel an ongoin
     "version": "2.0.0",
     "action": "support",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bap_id": "example-bap.com",
-    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "dee432d9-36c9-4146-ad21-2f5bcac9b6a9",
     "timestamp": "2025-01-27T12:15:00Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://api.example-bap.com/pilot/bap/energy/v2"
   },
   "message": {
     "ref_id": "order-bpp-789012",
     "ref_type": "order"
   }
 }
-
 ```
 </details>
 
@@ -7289,7 +7141,7 @@ This API is **NOT** to be used to cancel an ongoing session. To cancel an ongoin
 - Request: CPO returns support information: [Example](../../../examples/ev_charging/18_on_support/time-based-ev-charging-slot-on-support.json)
 
 <details>
-<summary><a href="../../../examples/ev_charging/18_on_support/time-based-ev-charging-slot-on-support.json">Example json :rocket:</a></summary>
+<summary><a href="../../../examples/ev-charging/v2/18_on_support/time-based-ev-charging-slot-on-support.json">Example json :rocket:</a></summary>
 
 ```json
 {
@@ -7297,12 +7149,14 @@ This API is **NOT** to be used to cancel an ongoing session. To cancel an ongoin
     "version": "2.0.0",
     "action": "on_support",
     "domain": "beckn.one:deg:ev-charging:*",
-    "bpp_id": "example-bpp.com",
-    "bpp_uri": "https://example-bpp.com/pilot/bap/energy/v2",
+    "bap_id": "example-bap.com",
+    "bap_uri": "https://example-bap.com/pilot/bap/energy/v2",
     "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
     "message_id": "dee432d9-36c9-4146-ad21-2f5bcac9b6a9",
     "timestamp": "2025-01-27T12:15:30Z",
-    "ttl": "PT30S"
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "https://example-bpp.com/pilot/bpp/energy/v2"
   },
   "message": {
     "support": {
@@ -7310,7 +7164,7 @@ This API is **NOT** to be used to cancel an ongoing session. To cancel an ongoin
       "phone": "18001080",
       "email": "support@bluechargenet-aggregator.io",
       "url": "https://support.bluechargenet-aggregator.io/ticket/SUP-20250730-001",
-      "hours": "Mon–Sun 24/7 IST",
+      "hours": "Mon\u2013Sun 24/7 IST",
       "channels": [
         "PHONE",
         "EMAIL",
