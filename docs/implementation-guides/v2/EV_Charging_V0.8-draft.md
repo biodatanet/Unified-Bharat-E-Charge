@@ -131,10 +131,438 @@ The CDS is responsible for handling discover API calls initiated by a BAP. It se
 
 The CDS takes in the discover call from the BAP. Now the CDS has dual functionalities, where in, it would act as a fan-out feature and would have the choice to cache the presence and availability of BPPs. This is enabled with the publish API, where the BPPs would upload their catalog information. Here the **charging connectors** are placed as items. The items uploaded, along with their corresponding offers, would have time-based and expiry bound validity associated with them. The catalog, in terms of availability, is categorized as available and unavailable.
 
-**CDS with respect to the flow:**
+#### 8.5.1 CDS with respect to the flow:
 1. The discover API call is made to the CDS. The CDS will validate the sender BAP.
 2. The CDS looks at the needs of the discover call and then would correspond that with the internal cache first and sends back the response to the BAP with the corresponding catalog through the on_discover call. If there is no availability currently, then there would be a fan-out, and the CDS will send out the same request to the BPPs who aren't caching their data.
 3. The on_discover is sent to the BAP through the CDS even if a fan out occurs and BPPs individually respond with on_discover.
+
+#### 8.5.2 Publishing catalog within the CDS
+
+The Catalog Discovery Service (CDS) provides a centralized mechanism for Buyer Provider Platforms (BPPs) to cache their service catalogs within the network infrastructure. This architectural capability significantly enhances network efficiency by decoupling the discovery process from the real-time operational availability of individual BPPs. By caching catalog data, the CDS can independently service discovery requests from Buyer Application Platforms (BAPs), aggregating disparate provider data into a single, unified catalog response. This approach not only ensures a faster response time for the end-user but also reduces the computational load and infrastructure robustness required for BPPs to handle high-frequency discovery traffic. To utilize this caching capability, providers must transmit their catalog details using the `catalog_publish` API.
+
+**8.5.2.1. action: catalog_publish**
+* **Method:** POST
+<details>
+<summary><a href="../Example-schemas/21_publish/ev-charging-catalog-publish.json">Example json :rocket:</a></summary>
+
+```json
+{
+    "context": {
+        "version": "2.0.0",
+        "action": "catalog_publish",
+        "timestamp": "2025-12-19T10:05:00Z",
+        "message_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
+        "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
+        "bpp_id": "example-bpp.com",
+        "bpp_uri": "[https://example-bpp.com/pilot/bap/energy/v2](https://example-bpp.com/pilot/bap/energy/v2)",
+        "ttl": "PT30S"
+    },
+    "message": {
+        "catalogs": [
+            {
+                "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld)",
+                "@type": "beckn:Catalog",
+                "beckn:id": "catalog-ev-charging-001",
+                "beckn:descriptor": {
+                    "@type": "beckn:Descriptor",
+                    "schema:name": "EV Charging Services Network",
+                    "beckn:shortDesc": "Comprehensive network of fast charging stations across Bengaluru"
+                },
+                "beckn:bppId": "bpp.ev-network.example.com",
+                "beckn:bppUri": "[https://bpp.ev-network.example.com/bpp](https://bpp.ev-network.example.com/bpp)",
+                "beckn:items": [
+                    {
+                        "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld)",
+                        "@type": "beckn:Item",
+                        "beckn:id": "IND*ecopower-charging*cs-01*IN*ECO*BTM*01*CCS2*A*CCS2-A",
+                        "beckn:descriptor": {
+                            "@type": "beckn:Descriptor",
+                            "schema:name": "DC Fast Charger - CCS2 (60kW)",
+                            "beckn:shortDesc": "High-speed DC charging station with CCS2 connector",
+                            "beckn:longDesc": "Ultra-fast DC charging station supporting CCS2 connector type with 60kW maximum power output. Features advanced thermal management and smart charging capabilities."
+                        },
+                        "beckn:category": {
+                            "@type": "schema:CategoryCode",
+                            "schema:codeValue": "ev-charging",
+                            "schema:name": "EV Charging"
+                        },
+                        "beckn:availabilityWindow": [
+                            {
+                                "@type": "beckn:TimePeriod",
+                                "schema:startTime": "06:00:00",
+                                "schema:endTime": "22:00:00"
+                            }
+                        ],
+                        "beckn:rateable": true,
+                        "beckn:rating": {
+                            "@type": "beckn:Rating",
+                            "beckn:ratingValue": 4.5,
+                            "beckn:ratingCount": 128
+                        },
+                        "beckn:isActive": true,
+                        "beckn:provider": {
+                            "beckn:id": "ecopower-charging",
+                            "beckn:descriptor": {
+                                "@type": "beckn:Descriptor",
+                                "schema:name": "EcoPower Charging Pvt Ltd"
+                            }
+                        },
+                        "beckn:itemAttributes": {
+                            "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingService/v1/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingService/v1/context.jsonld)",
+                            "@type": "ChargingService",
+                            "connectorType": "CCS2",
+                            "maxPowerKW": 60,
+                            "minPowerKW": 5,
+                            "reservationSupported": true,
+                            "chargingStation": {
+                                "id": "IN-ECO-BTM-STATION-01",
+                                "serviceLocation": {
+                                    "@type": "beckn:Location",
+                                    "geo": {
+                                        "type": "Point",
+                                        "coordinates": [
+                                            77.5946,
+                                            12.9716
+                                        ]
+                                    },
+                                    "address": {
+                                        "streetAddress": "EcoPower BTM Hub, 100 Ft Rd",
+                                        "addressLocality": "Bengaluru",
+                                        "addressRegion": "Karnataka",
+                                        "postalCode": "560076",
+                                        "addressCountry": "IN"
+                                    }
+                                }
+                            },
+                            "amenityFeature": [
+                                "RESTAURANT",
+                                "RESTROOM",
+                                "WI-FI"
+                            ],
+                            "evseId": "IN*ECO*BTM*01*CCS2*A",
+                            "parkingType": "Mall",
+                            "powerType": "DC",
+                            "connectorFormat": "CABLE",
+                            "chargingSpeed": "FAST",
+                            "vehicleType": "4-WHEELER"
+                        }
+                    },
+                    {
+                        "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld)",
+                        "@type": "beckn:Item",
+                        "beckn:id": "IND*greencharge-koramangala*cs-02*IN*GC*KOR*01*CCS2*A*CCS2-B",
+                        "beckn:descriptor": {
+                            "@type": "beckn:Descriptor",
+                            "schema:name": "DC Fast Charger - CCS2 (120kW)",
+                            "beckn:shortDesc": "Ultra-fast DC charging station with CCS2 connector",
+                            "beckn:longDesc": "Ultra-fast DC charging station supporting CCS2 connector type with 120kW maximum power output. Features liquid cooling and advanced power management."
+                        },
+                        "beckn:category": {
+                            "@type": "schema:CategoryCode",
+                            "schema:codeValue": "ev-charging",
+                            "schema:name": "EV Charging"
+                        },
+                        "beckn:availabilityWindow": [
+                            {
+                                "@type": "beckn:TimePeriod",
+                                "schema:startTime": "00:00:00",
+                                "schema:endTime": "23:59:59"
+                            }
+                        ],
+                        "beckn:rateable": true,
+                        "beckn:rating": {
+                            "@type": "beckn:Rating",
+                            "beckn:ratingValue": 4.7,
+                            "beckn:ratingCount": 89
+                        },
+                        "beckn:isActive": true,
+                        "beckn:provider": {
+                            "beckn:id": "greencharge-koramangala",
+                            "beckn:descriptor": {
+                                "@type": "beckn:Descriptor",
+                                "schema:name": "GreenCharge Energy Solutions"
+                            }
+                        },
+                        "beckn:itemAttributes": {
+                            "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingService/v1/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingService/v1/context.jsonld)",
+                            "@type": "ChargingService",
+                            "connectorType": "CCS2",
+                            "maxPowerKW": 120,
+                            "minPowerKW": 10,
+                            "reservationSupported": true,
+                            "chargingStation": {
+                                "id": "cs-02",
+                                "serviceLocation": {
+                                    "@type": "beckn:Location",
+                                    "geo": {
+                                        "type": "Point",
+                                        "coordinates": [
+                                            77.6104,
+                                            12.9153
+                                        ]
+                                    },
+                                    "address": {
+                                        "streetAddress": "GreenCharge Koramangala, 80 Ft Rd",
+                                        "addressLocality": "Bengaluru",
+                                        "addressRegion": "Karnataka",
+                                        "postalCode": "560034",
+                                        "addressCountry": "IN"
+                                    }
+                                }
+                            },
+                            "amenityFeature": [
+                                "RESTAURANT",
+                                "RESTROOM",
+                                "WI-FI",
+                                "PARKING"
+                            ],
+                            "evseId": "IN*GC*KOR*01*CCS2*A",
+                            "parkingType": "OffStreet",
+                            "powerType": "DC",
+                            "connectorFormat": "CABLE",
+                            "chargingSpeed": "ULTRAFAST",
+                            "vehicleType": "3-WHEELER"
+                        }
+                    },
+                    {
+                        "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld)",
+                        "@type": "beckn:Item",
+                        "beckn:id": "IND*powergrid-indiranagar*cs-03*IN*PG*IND*01*TYPE2*A*TYPE2-A",
+                        "beckn:descriptor": {
+                            "@type": "beckn:Descriptor",
+                            "schema:name": "AC Fast Charger - Type 2 (22kW)",
+                            "beckn:shortDesc": "AC fast charging station with Type 2 connector",
+                            "beckn:longDesc": "AC fast charging station supporting Type 2 connector type with 22kW maximum power output. Ideal for overnight charging and workplace charging."
+                        },
+                        "beckn:category": {
+                            "@type": "schema:CategoryCode",
+                            "schema:codeValue": "ev-charging",
+                            "schema:name": "EV Charging"
+                        },
+                        "beckn:availabilityWindow": [
+                            {
+                                "@type": "beckn:TimePeriod",
+                                "schema:startTime": "08:00:00",
+                                "schema:endTime": "20:00:00"
+                            }
+                        ],
+                        "beckn:rateable": true,
+                        "beckn:rating": {
+                            "@type": "beckn:Rating",
+                            "beckn:ratingValue": 4.3,
+                            "beckn:ratingCount": 156
+                        },
+                        "beckn:isActive": true,
+                        "beckn:provider": {
+                            "beckn:id": "powergrid-indiranagar",
+                            "beckn:descriptor": {
+                                "@type": "beckn:Descriptor",
+                                "schema:name": "PowerGrid Charging Solutions"
+                            }
+                        },
+                        "beckn:itemAttributes": {
+                            "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingService/v1/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingService/v1/context.jsonld)",
+                            "@type": "ChargingService",
+                            "connectorType": "Type2",
+                            "maxPowerKW": 22,
+                            "minPowerKW": 3,
+                            "reservationSupported": true,
+                            "chargingStation": {
+                                "id": "cs-03",
+                                "serviceLocation": {
+                                    "@type": "beckn:Location",
+                                    "geo": {
+                                        "type": "Point",
+                                        "coordinates": [
+                                            77.6254,
+                                            12.9716
+                                        ]
+                                    },
+                                    "address": {
+                                        "streetAddress": "PowerGrid Indiranagar, 100 Ft Rd",
+                                        "addressLocality": "Bengaluru",
+                                        "addressRegion": "Karnataka",
+                                        "postalCode": "560008",
+                                        "addressCountry": "IN"
+                                    }
+                                }
+                            },
+                            "amenityFeature": [
+                                "RESTROOM",
+                                "WI-FI",
+                                "PARKING"
+                            ],
+                            "evseId": "IN*PG*IND*01*TYPE2*A",
+                            "parkingType": "Office",
+                            "powerType": "AC_3_PHASE",
+                            "connectorFormat": "SOCKET",
+                            "chargingSpeed": "NORMAL",
+                            "vehicleType": "4-WHEELER"
+                        }
+                    }
+                ],
+                "beckn:offers": [
+                    {
+                        "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld)",
+                        "@type": "beckn:Offer",
+                        "beckn:id": "offer-ccs2-60kw-kwh",
+                        "beckn:descriptor": {
+                            "@type": "beckn:Descriptor",
+                            "schema:name": "Per-kWh Tariff - CCS2 60kW"
+                        },
+                        "beckn:items": [
+                            "IND*ecopower-charging*cs-01*IN*ECO*BTM*01*CCS2*A*CCS2-A"
+                        ],
+                        "beckn:price": {
+                            "currency": "INR",
+                            "value": 45.0,
+                            "applicableQuantity": {
+                                "unitText": "Kilowatt Hour",
+                                "unitCode": "KWH",
+                                "unitQuantity": 1
+                            }
+                        },
+                        "beckn:validity": {
+                            "@type": "beckn:TimePeriod",
+                            "schema:startDate": "2025-10-01T00:00:00Z",
+                            "schema:endDate": "2026-03-31T23:59:59Z"
+                        },
+                        "beckn:acceptedPaymentMethod": [
+                            "UPI",
+                            "CREDIT_CARD",
+                            "WALLET"
+                        ],
+                        "beckn:offerAttributes": {
+                            "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld)",
+                            "@type": "ChargingOffer",
+                            "tariffModel": "PER_KWH",
+                            "idleFeePolicy": {
+                                "currency": "INR",
+                                "value": 2,
+                                "applicableQuantity": {
+                                    "unitCode": "MIN",
+                                    "unitText": "minutes",
+                                    "unitQuantity": 10
+                                }
+                            }
+                        },
+                        "beckn:provider": "ecopower-charging"
+                    },
+                    {
+                        "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld)",
+                        "@type": "beckn:Offer",
+                        "beckn:id": "offer-ccs2-120kw-kwh",
+                        "beckn:descriptor": {
+                            "@type": "beckn:Descriptor",
+                            "schema:name": "Per-kWh Tariff - CCS2 120kW"
+                        },
+                        "beckn:items": [
+                            "IND*greencharge-koramangala*cs-02*IN*GC*KOR*01*CCS2*A*CCS2-B"
+                        ],
+                        "beckn:price": {
+                            "currency": "INR",
+                            "value": 22.0,
+                            "applicableQuantity": {
+                                "unitText": "Kilowatt Hour",
+                                "unitCode": "KWH",
+                                "unitQuantity": 1
+                            }
+                        },
+                        "beckn:validity": {
+                            "@type": "beckn:TimePeriod",
+                            "schema:startDate": "2025-10-15T00:00:00Z",
+                            "schema:endDate": "2026-04-15T23:59:59Z"
+                        },
+                        "beckn:acceptedPaymentMethod": [
+                            "UPI",
+                            "CREDIT_CARD",
+                            "WALLET",
+                            "BANK_TRANSFER"
+                        ],
+                        "beckn:offerAttributes": {
+                            "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld)",
+                            "@type": "ChargingOffer",
+                            "tariffModel": "PER_KWH",
+                            "idleFeePolicy": {
+                                "currency": "INR",
+                                "value": 3,
+                                "applicableQuantity": {
+                                    "unitCode": "MIN",
+                                    "unitText": "minutes",
+                                    "unitQuantity": 15
+                                }
+                            }
+                        },
+                        "beckn:provider": "greencharge-koramangala"
+                    },
+                    {
+                        "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/draft/schema/core/v2/context.jsonld)",
+                        "@type": "beckn:Offer",
+                        "beckn:id": "offer-type2-22kw-kwh",
+                        "beckn:descriptor": {
+                            "@type": "beckn:Descriptor",
+                            "schema:name": "Per-kWh Tariff - Type 2 22kW"
+                        },
+                        "beckn:items": [
+                            "IND*powergrid-indiranagar*cs-03*IN*PG*IND*01*TYPE2*A*TYPE2-A"
+                        ],
+                        "beckn:price": {
+                            "currency": "INR",
+                            "value": 15.0,
+                            "applicableQuantity": {
+                                "unitText": "Kilowatt Hour",
+                                "unitCode": "KWH",
+                                "unitQuantity": 1
+                            }
+                        },
+                        "beckn:validity": {
+                            "@type": "beckn:TimePeriod",
+                            "schema:startDate": "2025-10-20T00:00:00Z",
+                            "schema:endDate": "2026-04-20T23:59:59Z"
+                        },
+                        "beckn:acceptedPaymentMethod": [
+                            "UPI",
+                            "CREDIT_CARD",
+                            "WALLET",
+                            "BANK_TRANSFER"
+                        ],
+                        "beckn:offerAttributes": {
+                            "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingOffer/v1/context.jsonld)",
+                            "@type": "ChargingOffer",
+                            "tariffModel": "PER_KWH",
+                            "idleFeePolicy": {
+                                "currency": "INR",
+                                "value": 1,
+                                "applicableQuantity": {
+                                    "unitCode": "MIN",
+                                    "unitText": "minutes",
+                                    "unitQuantity": 30
+                                }
+                            }
+                        },
+                        "beckn:provider": "powergrid-indiranagar"
+                    }
+                ]
+            }
+        ]
+    }
+}
+```
+</details>
+
+* **Successful Catalog Upload** 
+<details>
+<summary><a href="../Example-schemas/21_publish/ev-charging-catalog-on_publish.json">Example json :rocket:</a></summary>
+  
+```json
+{
+    "ack_status": "ACK",
+    "timestamp": "2025-10-14T07:32:05Z"
+}
+```
+</details>
+
+> **Note:** It is imperative to understand the structural composition of the catalog, which is architected as an aggregation of `items` and `offers`. Within this framework, the `item` serves as the fundamental, root-level entity. In the specific context of the EV charging ecosystem, an `item` maps directly to an individual charging connector. Consequently, catalog implementation must treat every `item` entry as a distinct connector instance. Furthermore, the `item:id` attribute must be populated in strict adherence to the recommended nomenclature to ensure the unique and standardized identification of each connector within the network.
 
 ## 9. Creating an Open Network for EV Charging
 The open network for EV charging requires all the EV charging BAPs, BPPs, to be able to discover each other and become part of a common network. This network is manifested in the form of a Distributed Registry maintained by NBSL (the Network Operator).
