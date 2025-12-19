@@ -4662,11 +4662,11 @@ Satisfied, Aisha resumes her trip with time to spare.
 ```
 </details>
 
-## 12. Corner Cases / Special Cases
+## 12. Special Corner Cases:
 
 This section details various corner cases and special scenarios that may arise during the fulfillment lifecycle.
 
-### 12.0 BAP Led Payment
+### 12.0 BAP Led Payment:
 
 The network architecture empowers all Network Participants (NPs) to function as the beneficiary and facilitate payment collection for an underlying order. While previous sections demonstrated scenarios where the BPP acts as the beneficiary, the network also supports BAP-led payment collection. The example schema below illustrates how an application structures the `init` request to express intent to serve as the payment collector.
 
@@ -4938,17 +4938,17 @@ The network architecture empowers all Network Participants (NPs) to function as 
 ```
 </details>
 
-### Cancellation of a Reservation or Order
+### 12.1 Cancellation of an Order:
 
 Cancellation scenarios represent critical edge cases within the fulfillment lifecycle that require robust handling to ensure state consistency across the network. A cancellation event may originate from either the User, who opts to discontinue the service, or the Charging Point Operator (CPO), who may be unable to facilitate or fulfill the order due to operational constraints or unforeseen circumstances.
 
 
 
-#### User-Initiated Cancellation
+#### 12.1.1. User-Initiated Cancellation
 
 In instances where the User initiates the cancellation of an existing reservation or confirmed order, the BAP initiates the workflow by transmitting the `cancel` API request. This signals to the BPP that the User no longer requires the service, allowing the CPO to release the reserved inventory.
 
-**12.0.1. action: cancel**
+**12.1.1.1. action: cancel**
 * **Method:** POST
 
 <details>
@@ -5003,7 +5003,7 @@ In instances where the User initiates the cancellation of an existing reservatio
 
 Conversely, in scenarios where the Provider is unable to fulfill the obligation, the BPP communicates the cancellation by transmitting an unsolicited `on_cancel` callback. This notifies the BAP that the order status has been updated to `CANCELLED`, often accompanied by the processing of a refund where applicable.
 
-**12.0.2. action: on_cancel**
+**12.1.1.1. action: on_cancel**
 * **Method:** POST
 
 <details>
@@ -5119,5 +5119,244 @@ Conversely, in scenarios where the Provider is unable to fulfill the obligation,
 }
 ```
 </details>
+
 > **Note:** The cancellation of an order is only possible until the fulfilment status is in "PENDING" state. Once the fulfilment status turns to "ACTIVE" cancellation wouldnt be plausible.
+
+### 12.2 Interruption in Charging Process:
+
+Operational anomalies or technical faults at the charging station may occasionally result in the premature termination or interruption of an active charging session. To maintain state synchronization, such events trigger an immediate, unsolicited `on_status` callback from the Provider (BPP). This communication ensures the BAP is promptly notified of the service interruption, allowing for appropriate user notification and subsequent remediation steps.
+
+**12.2.1. action: on_status**
+* **Method:** POST
+
+<details>
+<summary><a href="../Example-schemas/13_on_status/ev-charging-session-interupt-on_status.json">Example json :rocket:</a></summary>
+
+```json
+{
+  "context": {
+    "version": "2.0.0",
+    "action": "on_status",
+    "domain": "beckn.one:deg:ev-charging:*",
+    "bap_id": "example-bap.com",
+    "bap_uri": "[https://example-bap.com/pilot/bap/energy/v2](https://example-bap.com/pilot/bap/energy/v2)",
+    "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
+    "message_id": "6743e9e2-4fb5-487c-92b7-13ba8018f176",
+    "timestamp": "2025-01-27T13:07:02Z",
+    "ttl": "PT30S",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "[https://example-bpp.com/pilot/bpp/energy/v2](https://example-bpp.com/pilot/bpp/energy/v2)"
+  },
+  "message": {
+    "order": {
+      "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld)",
+      "@type": "beckn:Order",
+      "beckn:id": "order-ev-charging-001",
+      "beckn:orderStatus": "INPROGRESS",
+      "beckn:seller": "cpo1.com",
+      "beckn:buyer": {
+        "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld)",
+        "@type": "beckn:Buyer",
+        "beckn:id": "user-123"
+      },
+      "beckn:orderItems": [
+        {
+          "beckn:orderedItem": "IND*ecopower-charging*cs-01*IN*ECO*BTM*01*CCS2*A*CCS2-A"
+        }
+      ],
+      "beckn:orderValue": {
+        "currency": "INR",
+        "value": 143.95,
+        "components": [
+          {
+            "type": "UNIT",
+            "value": 112.5,
+            "currency": "INR",
+            "description": "Base charging session cost (45 INR/kWh × 2.5 kWh)"
+          },
+          {
+            "type": "SURCHARGE",
+            "value": 20.0,
+            "currency": "INR",
+            "description": "Surge price (20%)"
+          },
+          {
+            "type": "DISCOUNT",
+            "value": -15.0,
+            "currency": "INR",
+            "description": "Offer discount (15%)"
+          },
+          {
+            "type": "FEE",
+            "value": 10.0,
+            "currency": "INR",
+            "description": "Service fee"
+          },
+          {
+            "type": "FEE",
+            "value": 13.64,
+            "currency": "INR",
+            "description": "Overcharge estimation"
+          },
+          {
+            "type": "FEE",
+            "value": 2.81,
+            "currency": "INR",
+            "description": "Buyer finder fee (2.5%)"
+          }
+        ]
+      },
+      "beckn:fulfillment": {
+        "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld)",
+        "@type": "beckn:Fulfillment",
+        "beckn:id": "fulfillment-001",
+        "beckn:mode": "RESERVATION",
+        "beckn:deliveryAttributes": {
+          "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld)",
+          "@type": "ChargingSession",
+          "sessionStatus": "INTERRUPTED"
+        }
+      },
+      "beckn:payment": {
+        "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld)",
+        "@type": "beckn:Payment",
+        "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
+        "beckn:amount": {
+          "currency": "INR",
+          "value": 143.95
+        },
+        "beckn:paymentURL": "[https://payments.bluechargenet-aggregator.io/pay?transaction_id=$transaction_id&amount=$amount](https://payments.bluechargenet-aggregator.io/pay?transaction_id=$transaction_id&amount=$amount)",
+        "beckn:txnRef": "TXN-123456789",
+        "beckn:paidAt": "2025-12-19T10:05:00Z",
+        "beckn:beneficiary": "BPP",
+        "beckn:paymentStatus": "COMPLETED"
+      }
+    }
+  }
+}
+```
+</details>
+
+### 12.3 User-Initiated Session Termination:
+
+During an active charging session, the user may elect to voluntarily terminate the service prior to the completion of the charge or the scheduled time. To facilitate this request, the application (BAP) triggers an `update` API call. Within this request, the `fulfillment` object must explicitly specify the `sessionStatus` as "STOP" within the delivery attributes. This signal instructs the Provider to cease the energy flow immediately. Subsequently, the Provider (BPP) will transmit an `on_update` callback containing the finalized Call Detail Record (CDR) reflecting the actual energy consumed up to the point of termination.
+
+**12.3.1. action: update**
+* **Method:** POST
+<details>
+<summary><a href="../Example-schemas/14_01_update/ev-charging-stop-update.json">Example json :rocket:</a></summary>
+
+```json
+{
+  "context": {
+    "version": "2.0.0",
+    "action": "update",
+    "domain": "beckn.one:deg:ev-charging:*",
+    "bpp_id": "example-bpp.com",
+    "bpp_uri": "[https://example-bpp.com/pilot/bap/energy/v2](https://example-bpp.com/pilot/bap/energy/v2)",
+    "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
+    "message_id": "6bd7be5b-ac21-4a5c-a787-5ec6980317e6",
+    "timestamp": "2025-01-27T10:15:00Z",
+    "ttl": "PT30S",
+    "bap_id": "example-bap.com",
+    "bap_uri": "[https://api.example-bap.com/pilot/bap/energy/v2](https://api.example-bap.com/pilot/bap/energy/v2)"
+  },
+  "message": {
+    "order": {
+      "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld)",
+      "@type": "beckn:Order",
+      "beckn:id": "order-ev-charging-001",
+      "beckn:orderStatus": "INPROGRESS",
+      "beckn:seller": "cpo1.com",
+      "beckn:buyer": {
+        "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld)",
+        "@type": "beckn:Buyer",
+        "beckn:id": "user-123",
+        "beckn:role": "BUYER",
+        "beckn:displayName": "Ravi Kumar",
+        "beckn:telephone": "+91-9876543210",
+        "beckn:email": "ravi.kumar@example.com",
+        "beckn:taxID": "GSTIN29ABCDE1234F1Z5"
+      },
+      "beckn:orderItems": [
+        {
+          "beckn:orderedItem": "IND*ecopower-charging*cs-01*IN*ECO*BTM*01*CCS2*A*CCS2-A"
+        }
+      ],
+      "beckn:orderValue": {
+        "currency": "INR",
+        "value": 143.95,
+        "components": [
+          {
+            "type": "UNIT",
+            "value": 112.5,
+            "currency": "INR",
+            "description": "Base charging session cost (45 INR/kWh × 2.5 kWh)"
+          },
+          {
+            "type": "SURCHARGE",
+            "value": 20.0,
+            "currency": "INR",
+            "description": "Surge price (20%)"
+          },
+          {
+            "type": "DISCOUNT",
+            "value": -15.0,
+            "currency": "INR",
+            "description": "Offer discount (15%)"
+          },
+          {
+            "type": "FEE",
+            "value": 10.0,
+            "currency": "INR",
+            "description": "Service fee"
+          },
+          {
+            "type": "FEE",
+            "value": 13.64,
+            "currency": "INR",
+            "description": "Overcharge estimation"
+          },
+          {
+            "type": "FEE",
+            "value": 2.81,
+            "currency": "INR",
+            "description": "Buyer finder fee (2.5%)"
+          }
+        ]
+      },
+      "beckn:fulfillment": {
+        "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld)",
+        "@type": "beckn:Fulfillment",
+        "beckn:id": "fulfillment-001",
+        "beckn:mode": "RESERVATION",
+        "beckn:deliveryAttributes": {
+          "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingSession/v1/context.jsonld)",
+          "@type": "ChargingSession",
+          "sessionStatus": "STOP"
+        }
+      },
+      "beckn:payment": {
+        "@context": "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/core/v2/context.jsonld)",
+        "@type": "beckn:Payment",
+        "beckn:id": "payment-123e4567-e89b-12d3-a456-426614174000",
+        "beckn:amount": {
+          "currency": "INR",
+          "value": 143.95
+        },
+        "beckn:paymentURL": "[https://payments.bluechargenet-aggregator.io/pay?transaction_id=$transaction_id&amount=$amount](https://payments.bluechargenet-aggregator.io/pay?transaction_id=$transaction_id&amount=$amount)",
+        "beckn:txnRef": "TXN-123456789",
+        "beckn:paidAt": "2025-12-19T10:05:00Z",
+        "beckn:beneficiary": "BPP",
+        "beckn:paymentStatus": "COMPLETED"
+      }
+    }
+  }
+}
+```
+</details>
+
+
+
+
 
