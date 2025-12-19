@@ -299,6 +299,12 @@ The charging session will terminate when the ₹450.00 cost limit is reached, or
 **11.1.2.1. action: discover**
 * **Method:** POST
 * **Use Cases:** Raghav scans QR code on charger using his BAP user app.
+<details>
+  <summary>Click to view the schema links</summary>
+  
+  - [Discovery by QR Schema](../Example-schemas/01_discover/discovery-by-QR.json)
+
+</details>
 
 **11.1.2.2. action: on_discover**
 * **Method:** POST
