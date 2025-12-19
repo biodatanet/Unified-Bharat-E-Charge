@@ -325,7 +325,8 @@ The charging session will terminate when the ₹450.00 cost limit is reached, or
     }
   }
 }
-
+```
+<details>
 **11.1.2.2. action: on_discover**
 * **Method:** POST
 * **Use Cases:** The app receives the charger's details (connector, power rating, live status, tariff, any active time-bound offer).
