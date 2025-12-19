@@ -17,6 +17,7 @@
 * [Creating an Open Network for EV Charging](#9-creating-an-open-network-for-ev-charging)
 * [Implementing EV Charging Semantics on Beckn Protocol](#10-implementing-ev-charging-semantics-on-beckn-protocol)
 * [User Stories](#11-user-stories)
+* [Special Cases](#12-special-cases)
 
 ---
 
