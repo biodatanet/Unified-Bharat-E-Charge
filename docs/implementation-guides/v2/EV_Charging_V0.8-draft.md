@@ -926,7 +926,7 @@ The charging session will terminate when the ₹450.00 cost limit is reached, or
               "schema:name": "Per-kWh Tariff - CCS2 60kW"
             },
             "beckn:items": [
-              "IND*GoGreen-charging*cs-02*IN*ECO*BTM*01*CCS2*A*CCS2-A"
+              "IND*ecopower-charging*cs-01*IN*ECO*BTM*01*CCS2*A*CCS2-A"
             ],
             "beckn:price": {
               "currency": "INR",
