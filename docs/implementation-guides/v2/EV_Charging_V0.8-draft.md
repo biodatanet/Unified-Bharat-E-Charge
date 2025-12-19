@@ -300,11 +300,31 @@ The charging session will terminate when the ₹450.00 cost limit is reached, or
 * **Method:** POST
 * **Use Cases:** Raghav scans QR code on charger using his BAP user app.
 <details>
-  <summary>Click to view the schema links</summary>
-  
-  - [Discovery by QR Schema](../Example-schemas/01_discover/discovery-by-QR.json)
+<summary><a href="../Example-schemas/01_discover/discovery-by-QR.json">Example json :rocket:</a></summary>
 
-</details>
+```json
+{
+  "context": {
+    "version": "2.0.0",
+    "action": "discover",
+    "domain": "beckn.one:deg:ev-charging:*",
+    "bap_id": "app.example.com",
+    "bap_uri": "[https://app.example.com/bap](https://app.example.com/bap)",
+    "transaction_id": "2b4d69aa-22e4-4c78-9f56-5a7b9e2b2002",
+    "message_id": "a1eabf26-29f5-4a01-9d4e-4c5c9d1a3d02",
+    "timestamp": "2025-10-14T07:31:00Z",
+    "ttl": "PT30S",
+    "schema_context": [
+      "[https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingService/v1/context.jsonld](https://raw.githubusercontent.com/beckn/protocol-specifications-new/refs/heads/main/schema/EvChargingService/v1/context.jsonld)"
+    ]
+  },
+  "message": {
+    "filters": {
+      "type": "jsonpath",
+      "expression": "$[?(@.beckn:id == 'IND*CP01*cs-01*evse-01*connectorid-01')]"
+    }
+  }
+}
 
 **11.1.2.2. action: on_discover**
 * **Method:** POST
